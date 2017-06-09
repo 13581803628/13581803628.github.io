@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>GeoTime information visualization</title>
+	<style type="text/css">
+		html,body{
+			width: 100%;
+		}
+		.paper{
+			width: 60%;
+			margin: auto auto;
+		}
+		p{
+			text-indent: 2em;
+		}
+		img{
+			display: block;
+			margin: auto auto;
+			margin-bottom: 2em;
+		}
+		samp{
+			display: block;
+			margin: auto auto;
+			text-align: center;
+		}
+	</style>
+</head>
+<body>
+	<div class="paper">
+		<header>
+			<h2>GeoTime information visualization</h2>
+			<h3>Thomas Kapler , William Wright</h3>
+		</header>
+
+		<article>
+			<h3>Abstract</h3>
+			<p> 
+				Analyzing observations over time and geography is a common task, but typically requires multiple, separate tools. The objective of our research has been to develop a method to visualize, and work with, the spatial interconnectedness of information over time and geography within a single, highly interactive three-dimensional (3-D) view. A novel visualization technique for displaying and tracking events, objects and activities within a combined temporal and geospatial display has been developed. This technique has been implemented as a demonstrable prototype called GeoTime in order to determine potential utility. Capabilities include descriptive events and relationships, association analysis, event aggregation methods and geo-located linked charting. Initial evaluations have been with military users. However, we believe the concept is applicable to a variety of government and business analysis tasks.
+			</p>
+			<strong>Keywords:</strong>Spatiotemporal; geospatial; interactive visualization; visual data analysis; link analysis; 3-D information visualization<br>
+
+			<h3>Introduction</h3>
+			<h4>Information visualization benefits</h4>
+			<p>Animated two- (2-D) and three-dimensional (3-D) computer graphics can be extremely expressive. With the correct approach to the visual design of the layout and the objects, large amounts of information can be quickly and easily comprehended by a human observer. Visualization is an external mental aid that enhances cognitive abilities.<sup>1</sup> When information is presented visually, efficient innate human capabilities can be used to perceive and process data. Orders of magnitude more information can be seen and understood in a few minutes. Information visualization techniques amplify cognition by increasing human mental resources, reducing search times, improving recognition of patterns, increasing inference making and increasing monitoring scope. <sup>1,2,31</sup> These benefits translate into system- and task-related performance factors, for individuals and groups, which affect the completion of analysis, decision-making and communication tasks. The time, effort and number of work products required to do these types of tasks is reduced. <sup>3</sup></p>
+			<h4>Visualization of events in time and geography </h4>
+			<p>Many visualization techniques for analyzing complex event interactions only display information along a single dimension, typically one of time, geography or network connectivity. Each of these types of visualizations is common and well understood. For example, time-focused scheduling charts such as Lifelines <sup>4</sup> or Microsoft (MS) Project display attributes of events over the single dimension of time. A Geographic Information System (GIS) product, such as MS MapPoint, <sup>5</sup> or ESRI ArcView, <sup>6</sup> shows events in the single dimension of locations on a map. There are also link analysis tools, such as Netmap <sup>7</sup> or Visual Links <sup>8</sup> that display events as a network diagram or graph, of objects and connections between objects. Several systems exist for tracking highly connected information, most developed for police investigative purposes.<sup>9</sup> Analyst Notebook <sup>10</sup> and Crime- Link, <sup>11</sup> for example, provide tools for organizing and arranging fragments of information into visualizations intended to help the analyst make sense of complex relationships. These tend to be one-dimensional representations that show either organizational structures, timelines, communication networks or locations. In each case, only a thin slice of a multidimensional picture is portrayed. </p>
+
+			<p>Some of these systems are capable of using animation to display time. Time is played back, or scrolled, and the related spatial or other displays change to reflect the state of information at a moment in time. However, this technique relies on limited human short-term memory to retain temporal changes and patterns. One technique, called 'tracks', is often used in air force and naval command and control systems to show on the map surface the trails of moving entities. Another visualization technique called 'small multiples' <sup>12</sup> uses repeated frames of a condition or chart, each capturing an incremental moment in time, much like looking at sequence of frames from a film laid side by side. Each image must be interpreted separately, and side-by-side comparisons made, to detect differences. This technique is expensive in terms of visual space since an image must be generated for each moment of interest, which can be problematic when trying to simultaneously display multiple images of adequate size that contain complex data content. One additional technique to mention is the use of linked views to support multivariate analysis, including time-series data analysis in one view, and a map in another view. <sup>1,13</sup> Interactive linking of data selection across multiple, separate views improves the small multiples technique.</p>
+
+			<h4>Related work</h4>
+			<p>Recent spatiotemporal research has been progressing in a variety of areas. For example, geographic knowledge discovery methods have been developed using analysis of logs of GPS position data over time. Point clouds and density surfaces in 3-D, with time as the vertical dimension, are used for data exploration. The goal is to develop agent-based computational mechanisms to support time- and location-based PDA services.<sup>14 </sup></p>
+			<p>Significant work is done in health data analysis, where spatiotemporal pattern analysis makes use of multiple maps and statistical graphing. Systems such as GeoVista make use of map animation, multivariate representations, and interactivity (e.g. highlighting, brushing, filtering and linked selection) to assist in the analysis of geo-referenced time varying multivariate data. However, maps and timelines are separate views.<sup>15–19</sup> </p>
+			<p>Research in the GIS community exploring 3-D visualization of activities in a combined time and geography space is in the early stages and first results include showing paths or track data but without interaction, animation or support of analytical user tasks.<sup>20</sup> This work is related to a 3-D spatiotemporal concept<sup>21</sup> discussed as a way to allow maps to encode time to the same degree that maps encode space. Time can extend above the map in the third dimension. Time does not need to be a 'hidden dimension'. One technique has been developed<sup>22</sup> that uses spiral-shaped ribbons as timelines to show isolated sequences of events that have occurred at discrete locations on a geographical map. This technique is limited because it uses spiral timelines exclusively to show the periodic quality of certain types of events, but does not show connectivity between the temporal and spatial information of data objects at multilocations within the spatial domain. Further, event data objects placed on the solid, wide spirals can suffer from complete occlusion, thereby providing for only a limited number of events and locations viewable with the spiral timelines.</p>
+			<p>A recent review of geographic dynamics<sup>23,24</sup> provides examples of 2-D or 3-D maps with playback and animation controls to discover spatiotemporal behaviors in, for example, the evolution of a weather system, the dispersion of pollutants or the propagation of a disease. Objects move across the surface of the map as they change position or shape in time. One classic example of physical 3-D spatiotemporal dynamics is the National Center for Supercomputing Applications' study of the evolution of a modeled thunderstorm.<sup>25,26</sup> </p>
+			<p>This paper on GeoTime information visualization builds on the description provided in an earlier publication <sup>27</sup> by adding discussions on event imagery, techniques for event aggregation and geo-located summary charts. More information is also provided with respect to the feedback and observations from the testing and evaluation done to date.</p>
+
+			<h3>The GeoTime visualization concept</h3>
+			<p>A visualization technique has been developed to improve perception of movements, events and relationships as they change over time within a spatial context. A combined temporal–spatial space was constructed in which to show interconnecting streams of events over a range of time in a single picture. Events are represented within an X, Y, T coordinate space, in which the X, Y plane shows geographic space and the Z-axis represents time into the future and past (see Figures 1 and 6A). In addition to providing the spatial context, the ground plane marks the instant of focus between before and after; events along the timeline 'occur' when they meet the surface. Events are arrayed in time along time tracks, which are located wherever events occur within the spatial plane.</p>
+			<h4>Spatial time tracks</h4>
+			<p>Spatial time tracks make possible the perception of where and when. They are the primary organizing elements that support the display of events in time and space within a single view. Time tracks represent a stream of time through a particular location and are represented as a literal line in space. Each unique location of interest will have one spatial timeline that passes through it. Events that occur at that location are arranged along this timeline according to the exact time or range of time at which the event occurred.</p>
+
+			<img src="./23/1.bmp"/>
+			<samp><strong>Figure 1 Individual frames of movement are translated into a continuous spatiotemporal representation.</strong></samp>
+
+			<p>A single spatial view will have as many timelines as necessary to show every event at every location within the current spatial and temporal scope. In order to make comparisons between events and sequences of events between locations, the time range represented by the timelines is synchronized. In other words, the time scale is the same for every timeline. </p>
+			<p>There are three variations of spatial timelines that emphasize spatial and temporal qualities to varying extents. Each variation is an increase of saliency of time over geography. These are 3-D Z-axis timelines, 3-D viewer facing timelines and linked time chart timelines. Each variation has a specific orientation and implementation in terms of its visual construction and behavior. The user may choose to enable any of the variations at any time during runtime.</p>
+			
+			<h4>3-D Z-axis timelines</h4>
+			<p>3-D timelines are oriented normal to the terrain view plane and exist within its coordinate space as shown in Figure 6B. This method places more emphasis on the geographical view.</p>
+			<h4>3-D viewer facing timelines</h4>
+			<p>3-D viewer facing timelines are similar to 3-D timelines, except that they rotate about the instant of focus point so that they always remain perpendicular to the viewpoint from which the scene is rendered. This is shown in Figure 6C. The viewer facing timelines slightly increases the saliency of time over geography. In practice, users have preferred the 3-D Z-axis timelines described above, or the linked time chart view described next. </p>
+			<h4>Linked time chart timelines</h4>
+			<p>Linked time chart timelines are timelines that connect a 2-D grid in screen space to locations marked in the 3-D terrain representation. More emphasis is placed on the time view. The chart grid lines help improve the precision of comparison of event times. As shown in Figure 2, the timeline grid is rendered in screen space as an overlay in front of the 2-D or 3-D terrain. </p>
+			<h4>Implementation</h4>
+			<p>GeoTime has been built as a Java application and uses the Oculus-for-Java<sup>28</sup> class library for rendering and animation. Screenshots of GeoTime are shown in Figure 6D and E. </p>
+			<p>Simple tables of application data are input with a csv file reader or an Excel drag'n drop input wizard. A Microsoft Access database is used to manage the application data. All three variations of spatial timelines have been implemented: 3-D Z-axis timelines, 3-D viewer facing timelines and linked time chart timelines. </p>
+			<p>Map data, including imagery and 3-D digital terrain elevation data, are accessed via an interface to ESRI ArcSDE/CJMTK (Commercial Joint Mapping Toolkit). <sup>29</sup></p>
+
+			<img src="./23/2.bmp"/>
+			<samp><strong>Figure 2 Diagram showing how time chart timelines are connected to terrain locations.</strong></samp>
+
+			<h3>The GeoTime information model</h3>
+			<p>An information model, based loosely on Davidsonian semantics,30 is used to support the representation of information in GeoTime. The following object types are employed in GeoTime: </p>
+			<p>Entities (people or things): represent any thing related to or involved in an event including people, objects, organizations, equipment, businesses, etc. </p>
+			<p>Locations (geospatial or conceptual): represent a place within a spatial context, such as a geospatial map, a node in a diagram such as a flowchart, or even a conceptual place such as 'OZ'.</p> 
+			<p>Events (occurrences or discovered facts): represent any action that can be described. Events store the times at which the action took place. The following are examples of events: </p>
+			<ul>
+				<li>Bill was at Toms house at 1500 h.</li>
+				<li>Tom phoned Bill on Thursday.</li>
+				<li>A tree fell in the forest at 0413 h, June 3, 1993.</li>
+				<li>Tom will move to Spain in the summer of 2004.</li>
+			</ul>
+			<p>These basic information types are combined into groups using Associations. An association is an information object that describes a pairing between two objects. They are the links in Figure 3. For example, in order to show that a particular entity was present when an event occurred, an Association is created to represent that Entity X 'was present at' Event A. An association also exists to link Event A to a particular Location. In GeoTime, groups of associated elements have been defined to represent certain classes of occurrences and relationships. These groups have specific visual expressions and interactive behaviors in the display. Examples of defined groups are described in Figure 3. Extensions, new classes of associations and new types of groups are possible. </p>
+			<p>A variation of the association type is used to define a subclass of these groups to represent user hypotheses. In other words, groups can be created to represent a guess or hypothesis that an event occurred, that it occurred at a certain location or involved certain entities. Currently, the degree of belief/accuracy/evidence reliability is modeled on a simple 1-2-3 scale and represented graphically with line quality.</p>
+
+			<h3>Information interaction within the spatiotemporal workspace</h3>
+			<p>In order for GeoTime to move beyond a visualization concept to a usable prototype, several user interactions within the combined spatiotemporal viewer were necessary. In addition to familiar data interactions such as selection, filtering, hide/show and grouping that operate as commonly expected, the following interactions were specifically developed or customized to work within the GeoTime environment.</p> 
+			<h4>Temporal navigation </h4>
+			<p>The Time and Range Slider, as shown in Figure 6F, is a linear time scale that is visible underneath the visualization representation. This control contains subcontrols/ selectors that allow control of three independent temporal parameters: the Instant of Focus, the Past Range of Time and the Future Range of Time. Past and future ranges can be independently set by the user by clicking and dragging on handles. The time range visible in the time scale of the time slider can be expanded or contracted to show a time span from centuries to seconds. Clicking and dragging on the time slider anywhere except the three selectors will allow the entire time scale to slide to translate in time to a point further in the future or past. </p>
+			<p>Continuous animation of events over time and geography is provided as the time slider is moved forward and backwards in time. If a vehicle moves from location A at t1 to location B at t2, it is shown moving continuously across the stationary map. The events, on the timelines, animate up and down at a high frame rate. The time scale in the scene moves as well. </p>
+			<h4>Simultaneous spatial and temporal navigation </h4>
+			<p>Common interactions such as zoom-box selection and saved views are provided. In addition, simultaneous spatial and temporal zooming has been implemented to allow the user to quickly move to a context of interest. In any view, the user may select a subset of events and zoom to them in both time and space using the Fit Time and Fit Space functions. Within the Overlay calendar views, these actions happen simultaneously by dragging a zoom-box on the time grid itself. The time range and the geographic extents of the selected events are used to set the bounds of the new view. </p>
+			<h4>Association analysis </h4>
+			<p>Functions have been developed that take advantage of the association-based connections between Events, Entities and Locations. These functions are used to find groups of connected objects during analysis. Associations connect these basic objects into complex groups (see Figure 3) representing actual occurrences. These associations can be followed from object to object to reveal connections that are not immediately apparent. Association analysis functions are especially useful in the analysis of large data sets where a quick and efficient method to find and/or filter connected groups is desirable. For example, an Entity may be involved in events in a dozen locations, and each of those events may involve other Entities, and so on. The association analysis function can be used to display only those locations on the visualization representation that the entity has visited or entities that have been contacted. Two simple association analysis functions have been implemented: Expanding Search and Connection Search.</p>
+
+			<img src="./23/3.bmp"/>
+			<samp><strong>Figure 3 Example entity activity groups.</strong></samp>
+			<img src="./23/4.bmp"/>
+			<samp><strong>Figure 4 Expanding Search.</strong></samp>
+
+			</p><strong>Expanding Search</strong> As illustrated in Figure 4, the Expanding Search function allows the user to start with a selected object(s) and then incrementally show objects that are associated with it by increasing degrees of separation. The user selects an object or group of objects of focus and clicks on the Expanding Search button. This causes everything in the visualization representation to disappear except the selected items. The user then increments the search depth and objects connected by the specified depth are made visible in the display. In this way, sets of connected objects are revealed. </p>
+			</p><strong>Connection Search</strong> The Connection Search function allows the user to connect any two objects by their web of associations. The user selects any two objects and clicks on the Connection Search tool. The Connection Search algorithm scans the extents of the network of associations starting from one of the objects. The search will continue until the second object is found as one of the connected objects or until there are no more connected objects. If a path of associated objects between the target objects exists, all of the objects along that path are displayed and the depth is automatically displayed showing the minimum number of links between the objects. This is illustrated in Figure 5.</p>
+
+			<h4>Additional entity and event interactions</h4>
+			<p>Icons and small images are used to describe entities such as people, organizations and objects. Icons are also used to describe activities. These can be standard or tailored icons.</p>
+			<p>As entities change location in time, animation is used to show their movement from one location to another. Simple linear interpolation is done between individual observations. An optional 'trail', which traces an entity in time and geography, can be displayed for one or more selected entities.</p>
+			<p>Some event timelines, for instance cultural or political, do not have a location. Other events have unknown locations. Non-geographic timelines are shown on the side of the map plane.</p>
+			<p>Mouse over drill down, as shown in Figure 6G, allows additional information to be displayed in context. Entities and events can be selected and grouped into associations. In this way, a user can organize observations into related stories or story fragments. These groupings can be named with a label and visibility controls allow them to be turned on and off.</p>
+			<h4>Annotations in geography and time</h4>
+			<p>Ink strokes can be placed on the map and used to annotate elements of interest with arrows, circles and freeform markings. Some examples are shown in Figure 6H. Ink objects are located in geography and time and so appear and disappear as geographic and time contexts are navigated.</p>
+			<h4>Event imagery</h4>
+			<p>Imagery can be used as part of the event description. Images can be viewed in all of the GeoTime contexts. Figure 7A and B show images in the time lines and the time chart views. With this method, differences over time can be seen in a sequence of images. Imagery can be events associated with people, traffic, buildings and other urban changes or rural and agricultural changes.</p>
+			<h4>Event aggregation</h4>
+			<p>Working with hundreds of events seems realistic in military operations. An Army Battalion, the 1 PPCLI, Microsoft Access database used in Afghanistan in 2002 recorded, in 3 weeks, 500 incidents of who-what-whenwhere on shootings, bombings, fires, mines, meetings, kidnaps, thefts, assaults, etc. However, subject matter experts discussed situations where understanding less than 100 events was important, as shown in Figure 7D, and situations where many thousands of events are involved.  </p>
+			<p>When the number of events increases, techniques for aggregation become more important. Many individual locations and events need to be combined into a single summary. Such summaries of thousands of individual events and locations help make trends in time and space more visible and comparable. Several techniques have been implemented to support aggregation. Examples are shown in Figure 7C and E.</p>
+			<h4>User-defined nested locations</h4>
+			<p>Aggregation based on level of detail (LOD) is commonly used in mapping geographical features at various scales. On a 1:25,000 map, for example, individual buildings may be shown, but a 1:500,000 map may show just a point for an entire city. GeoTime supports LOD aggregation of events based on hierarchy, scale and geographic region. GeoTime also allows the user to adjust LOD behavior to suit their particular analytical task. There are three components underlying GeoTime aggregation:</p>
+			<ul>
+				<li>
+					Hierarchy of locations: Figure 8 shows aggregation of events by proximity based on map scale. An organization of superior and subordinate locations must exist to allow the GeoTime aggregation method to roll up events. A gazetteer is commonly used to help define such a structure. Within GeoTime, a hierarchy of locations is implemented using associations to define parent–child relationships between locations.
+				</li>
+				<li>
+					User-defined geo-regions: The hierarchy may be defined explicitly based on inclusion within a geographic boundary as shown in Figure 9. The user can define an arbitrary region using GeoTime's built-in drawing tools and then aggregate the events in that region into a representative location. In GeoTime this is accomplished by associating a polygon outline with a location.
+				</li>
+				<li>
+					Automatic LOD level selection: The level of aggregation can be explicitly set by the user or it can be done automatically based on the view scale. If the automatic mode is selected, events will be re-aggregated as the user navigates the scene. This may not always be desirable since it significantly changes the event display which potentially makes interpretation challenging.
+				</li>
+			</ul>
+			<h4>Geo-located summary charts for time tracks</h4>
+			<p>Depending on the user's task, it can be useful to see summary charts of events for a geographic point or area. GeoTime provides geo-located summary charts of events for each time track. Charts may be configured to aggregate by time, type of event, and other data attributes or computed dimensions.</p>
+			<p>A single chart of totals for all locations is located in the side panel for reference and allows for rapid filtering and chart adjustments. Figure 7E shows a screenshot of geolocated charts and the summary side panel chart. Categories of events can be added or removed from all geo-located charts by adding or removing them in the single total chart.</p>
+
+			<img src="./23/5.bmp"/>
+			<samp><strong>Figure 5 Connection Search.</strong></samp>
+
+
+			<p>Charts are also affected by temporal navigation and operate in one of the three modes:</p>
+			<ol>
+				<li>All data in the system appears in the charts.</li>
+				<li>All data within the current temporal range appears in the charts. (The user sets a time range over which to chart using the time slider range control shown in Figure 6F.)</li>
+				<li> Only data that is in the current geospatial and temporal range appears in charts.</li>
+			</ol>
+			With the second and third options, it is possible to
+			animate the charts over time to see changes over time. It
+			is also possible to compare a specific GeoTime range to
+			the overall situation as shown in the single chart of totals
+			in the side panel.
+			Using the charts in combination with user-defined
+			location boundaries allows aggregation of events across
+			an arbitrary region. For example, to compare a summary
+			of events along two separate routes, locations would be
+			created for each by drawing an outline along each route
+			and then assigning the outlines to the locations. This is
+			shown in Figure 7C. By adjusting the aggregation level,
+			GeoTime will automatically aggregate all events within
+			the outline regions into the newly created locations.
+			Charts can then be enabled for those locations.
+			<h4>Aggregation hierarchies</h4>
+			Some progress has been made with events belonging to
+			multiple concurrent sets, but more work is required.
+			Currently, event aggregation does not need to be
+			according to a strict hierarchy. An event can have
+			multiple parents and so belong to more than one set.
+			However, in the display, events are shown as belonging to
+			only one timeline and one chart at a time. For instance,
+			with two intersecting routes, the events at the intersection
+			will belong to both route aggregations but are only
+			shown in one aggregation if both routes are displayed. If
+			only one route is displayed, and it can be either route, the
+			events at the intersection are included in that route. This
+			approach has been taken to enable using an inked area as
+			a filter with an associated defined area of interest. So an
+			analyst can say, show me all the things that have
+			happened in this (arbitrarily) defined area.
+			<h3>Applications of GeoTime</h3>
+			Tracking and analyzing entities and streams of events has
+			traditionally been the domain of investigators, whether
+			that be police services or military intelligence. In
+			addition, business users also analyze events in time and
+			location to better understand phenomenon such as
+			customer behavior or transportation patterns. GeoTime
+			applications are possible in both reporting and analysis.
+			<h4>Visual history for the 'information consumer'</h4>
+			The GeoTime display, as shown in Figure 7F, can be used
+			to get an instant view of activity at any time/space
+			coordinate. Standard activity reports from other systems
+			can be imported and translated into GeoTime elements.
+			Over the course of weeks or months, hundreds to
+			thousands of events from such automated systems could
+			be stored and reviewed with a system such as GeoTime.
+			<h4>Criminal analysis by the 'information producer'</h4>
+			An investigator, such as a police officer, could use
+			GeoTime to review an interactive log of events gathered
+			during the course of long-term investigations. Existing
+			reports and query results are combined with user input
+			data, assertions and hypotheses, as shown in Figure 7D.
+			The investigator can replay events and understand
+			relationships between multiple suspects, movements
+			and the events. Patterns of travel, communications and
+			other types of events can be understood. Repetition,
+			regularity, bursts or pauses in activity are easily apparent.
+			<h3>Evaluation and conclusions</h3>
+			Subjective evaluations and operator trials with four
+			subject matter experts have been conducted. These initial
+			evaluations of GeoTime were run against databases of
+			simulated battlefield events and analyst training scenarios,
+			with many hundreds of events. These informal
+			evaluations show that the following types of information
+			can be quickly revealed and understood:
+			<ul>
+				<li>What significant events happened in this area in the last X days?</li>
+				<li>Who was involved?</li>
+				<li>What is the history of this person?</li>
+				<li>How are they connected with other people?</li>
+				<li>Where are the activity hot spots?</li>
+				<li>Has this type of event occurred here or elsewhere in the last Y period of time?</li>
+			</ul>
+
+			<img src="./23/6.bmp"/>
+			<samp><strong>Figure 6(A) 3-D Timeline configured to display past as down and future as up.(B) Diagram showing how 3-D timelines pass through terrain locations. 3-D timelines are locked in terrain space and are affected by changes in perspective.(C) Viewer facing timelines rotate to face the viewpoint no matter how the terrain is rotated in 3-D.(D) Screenshot of GeoTime with time slider at bottom and moveable time scale at right. The green line traces one entity's movement in time and geography.(E) Screenshot of GeoTime with overhead view and time slider advanced forward in time, to a different part of the event data set, from Figure 6.(F) Time slider with variable pasttfuture rangesthandles.(G) Pointing at an entity or activity drills down to additional information.(H) Screenshot of GeoTime with ink annotation.</strong></samp>
+
+			With respect to potential applications and the utility of
+			GeoTime, encouraging and positive remarks were provided
+			by military subject matter experts in stability and
+			support operations. A number of those remarks are
+			provided here: These are gaps in capability that can be
+			filled by GeoTime.
+			
+			<ul>
+				<li>Preparation for patrolling involved researching issues including who, where and what. The history of local belligerent commanders and incidents needs to be reviewed. It is difficult to do this with current tools.</li>
+				<li>Tracking and being aware of history is important. For example, a ceasefire was organized around a religious calendar event. The event presented an opportunity and knowing about the event made it possible.</li>
+				<li>In one campaign, the head of civil affairs had been there 20 months and had detailed appreciation of the history and relationships.</li>
+				<li>You need to keep track of trends. What happened here? What keeps happening here? There are patterns. Belligerents keep trying the same thing with new rotations (a rotation is typically 6–12 months tour of duty). When the attack came, it did come from the area where many previous earlier attacks had also originated.</li>
+				<li>The discovery of emergent trendsypersistent patterns y sooner rather than later would be useful. For example, the XXX Colonel that tends to show up in an area the day before something happens.</li>
+				<li>Every rotation a valuable knowledge base is created, and every rotation, it is lost. We need to make better use of the knowledge base. It is a valuable historical record. The lack of a historical record contributes to loss of life.</li>
+				<li>Not using the historical record of events, factions, populations, culture, etc. is information that is lost. The same mistakes are made over and over.</li>
+			</ul>
+
+
+
+			<img src="./23/7.bmp"/>
+			<samp><strong>Figure 7 (A) Screenshot of geo- and time-located imagery. (B) Screenshot of imagery in time chart view. (C) Comparing events along two routes. Bounded locations, event aggregation and geo-located charts can be used to summarize event data over time. (D) Screenshot of GeoTime prototype in time chart or calendar mode showing recent events within a smaller local area. (E) Screenshot of geo-located charts. A summary chart for all events is shown in the side panel on the right. (F) Events and entity trail in time and geography.</strong></samp><br><br>
+			<img src="./23/8.bmp"/>
+			<samp><strong>Figure 8 Aggregation by proximity based on map scale.</strong></samp><br><br>
+			<img src="./23/9.bmp"/>
+			<samp><strong>Figure 9 Aggregation by defined regions. Level of aggregation set by user.</strong></samp>
+
+			<p>During the informal evaluations, some GeoTime shortcomings
+were also noted. When many hundreds of
+events are on the screen at once, one key issue that
+became apparent was the need for seeing through the
+dense display of objects and labels. New aggregation/
+de-aggregation methods were identified as being needed.
+This feedback resulted in the capabilities described
+in Section 6 – Event Aggregation. In addition, new
+label management techniques can be imagined and
+investigated to assist with displaying a higher density of
+events.</p>
+<p>The evaluations revealed the need to deal with varying
+event precision in time and geography. For example, an
+event occurred sometime before the Xth year vs occurring
+at an exact date and time. For locations, an event may
+only be known to have occurred in a country vs a
+particular address in a particular city. Coordinates in time
+and space can be vague. GeoTime visualization techniques
+need to be extended to deal with issues of varying
+precision as well as related issues such as levels of
+accuracy and reliability.</p>
+<p>With respect to GeoTime scalability, observations from
+the evaluations suggest that if it were possible to work
+with many thousands of events, users would do so. One
+test evaluation data set consisted of about 1,200 events.
+With the aggregation and exploratory interaction techniques,
+event patterns were discovered and were able to
+be compared over different time periods. Another test
+data set, with more than 2000 events, caused some
+system slowdown in acceptable interaction speeds. This
+has resulted in some recent re-factoring of the implementation
+to improve performance.</p>
+<p>Additional GeoTime evaluations are planned in the
+next year, including technology exploration exercises
+with subject matter experts, as well as more formal task
+impact and evaluation experiments. A combination of
+direct observation, user questionnaires, task metrics and
+GeoTime instrumentation will be used to help understand
+specific visualization and interaction strengths and
+weaknesses. Differences in task performance between
+GeoTime and existing tools will be compared.
+One useful follow-on task would be to prepare case
+study reports that provide examples of GeoTime analysis
+to illustrate strengths and weaknesses. One case study
+example used during development and training exercises
+consists of a biographical personal history. Several other
+case studies have been done and reporting these would
+help show the range and nature of analysis tasks that can
+be performed with GeoTime.</p>
+<p>The GeoTime prototype demonstrates that a combined
+spatial and temporal display is possible, and can be an
+effective technique when applied to analysis of complex
+past and future events within a geographic context.
+Ongoing research will include further experimentation to
+assess, explore and develop the full potential of the
+GeoTime visualization tool.</p>
+		</article>
+
+		<footer>
+			<h3>References</h3>
+			<ol>
+				<li>Becker R, Cleveland W, Wilks A. Dynamic graphics for data analysis. Statistical Science 1987; 2: 355–395.</li>
+				<li> Ware C. Information Visualization – Perception for Design. Academic Press: New York, 2000.</li>
+				<li>Wright W, Kapler T. Visualization of blue forces using blobology. 2002 Command and Control Research and Technology Symposium. (Monterey, Calif), June, 2002.</li>
+				<li>Plaisant C, Milash B, Rose A, Widoff S, Shneiderman B. LifeLines: Visualizing Personal Histories. ACM CHI (Vancouver, Canada), April 1996.</li>
+				<li><a href="http://www.microsoft.com/mappoint">http://www.microsoft.com/mappoint.</a></li>
+				<li><a href="http://www.esri.com">http://www.esri.com.</a></li>
+				<li><a href="http://www.netmapanalytics.com">http://www.netmapanalytics.com.</a></li>
+				<li><a href="http://www.visualanalytics.com">http://www.visualanalytics.com.</a></li>
+				<li>Harries K. Mapping Crime: Principles and Practice, U.S. Department of Justice, Office of Justice Programs, National Institute of Justice Publication NCJ 178919, 1999.</li>
+				<li><a href="http://www.i2inc.com">http://www.i2inc.com.</a></li>
+				<li><a href="http://www.pciusa.us/crimelink.htm">http://www.pciusa.us/crimelink.htm.</a></li>
+				<li>Tufte E. Envisioning Information. Graphics Press: Cheshire, CT, 1990.</li>
+				<li>Eick S, Wills G. High interaction graphics. European Journal of Operational Research 1995; 81: 445–459.</li>
+				<li>Mountain D, Goncalves A, Rodrigues A. Geographic Knowledge Discovery and Spatial Agent Interfaces for Location-based Services. GIS Research U.K., City University: London, 2003.</li>
+				<li> MacEachren AA. Visualization in modern cartography, setting the agenda. In: MacEachren, Taylor F (Eds). Visualization in Modern Cartography. Pergamon Press: New York, 1994.</li>
+				<li>MacEachren A, Brewer C, Pickle L. Mapping Health Statistics: Representing Data Reliability. Proceedings of the 17th International Cartographic Conference, Barcelona, Spain, September 3–9, International Cartographic Association, 1995.</li>
+				<li>MacEachren A, Kraak M. Exploratory cartographic visualization: advancing the agenda. Computers and Geosciences 1997; 23: 335–344.</li>
+				<li>MacEachren A. Design and evaluation of a computerized dynamic mapping system interface. Final Report to the National Center for Health Statistics, February 21, 1998.</li>
+				<li>MacEachren A, Dai X, Hardisty F, Guo D, Lengerich G. Exploring high-D spaces with multiform matricies and small multiples. Proceedings of the International Symposium on Information Visualization. (Seattle, Washington) October, 2003.</li>
+				<li>Mei-Po K, Jiyeong L. Geovisualization of human activity patterns using 3D GIS: a time-geographic approach. In: Goodchild M, Janelle D (Eds). Spatially Integrated Social Science. Oxford University Press: New York, 2004; 48–66.</li>
+				<li>Wood D. The Power of Maps. Guilford Press: New York, 1992.</li>
+				<li>Hewagamage K, Hirakawa M, Ichikawa T. Interactive visualization of spatiotemporal patterns using spirals on a geographical map. Proceedings from the IEEE Symposium on Visual Languages. (Tokyo, Japan) 1999.</li>
+				<li>Yuan M. GIS representation for visualizing and mining geographic dynamics. University Consortium for Geographic Information Science (UCGIS) Workshop on Geospatial Visualization and Knowledge Discovery (Lansdowne, VA) November, 2003.</li>
+				<li>Yuan M, Dickens-Micozzi M, Magsig M. Analysis of tornado damage tracks from the 3 May tornado outbreak using multispectral satellite imagery. Weather and Forecasting 2002; 17: 382–398.</li>
+				<li>Wilhelmson R, Jewett B. A study of the evolution of a numerically modeled severe storm. International Journal of Supercomputer Applications 1990; 4: 20–36.</li>
+				<li>Tufte E. Visual Explanations. Graphics Press: Chesire, CT, 1997.</li>
+				<li>Kapler T, Wright W. GeoTime information visualization. IEEE Information Visualization Conference Proceedings 2004. Austin, Texas.</li>
+				<li><a href="http://www.oculusinfo.com">http://www.oculusinfo.com.</a></li>
+				<li><a href="http://www.cjmtk.com">http://www.cjmtk.com.</a></li>
+				<li>Davidson D. Essays on Actions and Events. Clarendon Press: Oxford, 1980.</li>
+				<li>Card S, MacKinlay J, Shneiderman B. Readings in Information Visualization. Morgan Kaufman: Los Altos, CA, 1999.</li>
+			</ol>
+
+		</footer>
+	</div>
+
+</body>
+</html>
