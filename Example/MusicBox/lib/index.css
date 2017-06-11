@@ -1,0 +1,185 @@
+body{
+                background-color: #030303;
+                overflow: hidden    
+            }
+
+            #background{
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index: 0;
+                width: 100vw;
+                height: 100vh;
+                background-image: radial-gradient(rgba(105,205,215,0.5),rgba(10,20,30,0));
+                background-position: 80% 100%;
+                background-size: 160% 200%;
+                opacity: 1;
+                transition: opacity 2s ease-in-out
+            }
+            #background .hidden{
+                opacity: 0
+            }
+            #canvas{
+               filter: saturate(200%) 
+            }
+            #background .loading{
+                opacity: 0.2
+            }
+            #loader{
+               opacity: 1 
+            }
+            #spinner{
+               animation: spinner-anim 2s ease-out infinite
+            }
+            #spinner::before{
+                animation: spinner-anim 2s ease-out infinite
+            }
+            #spinner::after{
+                animation: spinner-anim 1s ease-out infinite
+            }
+            .dg.ac{
+                z-index: 4 !important
+            }
+            #loader{
+                position: absolute;
+                z-index: 1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                top: calc(50% - 25px);
+                height: 50px;
+                width: 100vw;
+                opacity: 0;
+                transition: opacity 0.5s ease-in-out 
+            }
+           
+            #loading-text{
+                font-size: 1.8em;
+                font-family: 'Josefin Sans', sans-serif;
+                text-align: center;
+                color: #efefef;
+                margin-left: 10px;
+                transition: all 0.5s ease-in-out                
+            }
+            #spinner{
+                height: 50px;
+                width: 50px;
+                border: 2px solid #efefef;
+                border-color: transparent transparent #efefef #efefef;
+                border-radius: 50%;
+                margin-right: 10px;
+                transform: rotate(0deg)                
+            }
+
+            #spinner::before,#spinner::after{
+                position: absolute;
+                content: '';
+                display: block;
+                border: 2px solid #efefef;
+                border-color: transparent transparent #efefef #efefef;
+                border-radius: 50%
+            }
+            
+            #spinner::before{
+                top: 3px;
+                left: 3px;
+                height: 40px;
+                width: 40px
+            }
+            
+            #spinner::after{
+                top: 8px;
+                left: 8px;
+                height: 30px;
+                width: 30px
+            }
+            
+            #canvas{
+                position: absolute;
+                z-index: 2;
+                top: 0;
+                left: 0;
+                overflow: hidden;
+                height: 100vh;
+                width: 100vw 
+            }
+
+            #title{
+                position: absolute;
+                top: 30px;
+                left: 30px;
+                font-family: 'Josefin Sans', sans-serif;
+                font-size: 1.2em;
+                color: #efefef
+            }
+
+            #audio-toggle-container{
+                position: fixed;
+                bottom: 30px;
+                left: 30px;
+                height: 40px;
+                width: 100px;
+                z-index:4 !important;
+            }
+            #check-audio-toggle{
+                display: none;
+            }
+            #check-audio-toggle .disabled,#lbl-audio-toggle{
+                opacity: 0.2;
+               /*  pointer-events: none */
+            }
+            #check-audio-toggle:checked,#lbl-audio-toggle:after {
+                content: "Pause";
+                background-color: #ff3401;
+                color: #efefef;
+                border: 2px solid #ff3401;
+                opacity: 0.2;
+                transform: translateY(-3px)
+            }
+            #lbl-audio-toggle{
+                position: relative;
+                display: block;
+                width: 100%;
+                height: 100%;
+                cursor: pointer
+            }
+            #lbl-audio-toggle::after{
+                position: absolute;
+                display: block;
+                height: 100%;
+                width: 100%;
+                z-index: 2;
+                content: 'Play';
+                box-sizing: border-box;
+                text-align: center;
+                line-height: 40px;
+                font-family: 'Josefin Sans', sans-serif;
+                font-size: 1.2em;
+                color: #009688;
+                border: 2px solid #009688;
+                opacity: 1;
+                transform: translateY(0px);
+                transition: all 0.25s ease-in-out
+            }
+            #codepen-link{
+                position: absolute;
+                bottom: 30px;
+                right: 30px;
+                height: 40px;
+                width: 40px;
+                z-index: 10;
+                border-radius: 50%;
+                box-sizing: border-box;
+                background-image: url('http://www.seanalexanderfree.com/codepen/avatar.jpg');
+                background-position: center center;
+                background-size: cover;
+                opacity: 0.4;
+                transition: all 0.25s
+            }
+            #codepen-link:hover{
+                opacity: 0.8;
+                box-shadow: 0 0 6px #efefef
+            }
+            @keyframes spinner-anim{
+                transform: rotate(360deg)
+            }

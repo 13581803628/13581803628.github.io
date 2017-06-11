@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="Access-Control-Allow-Origin" content="*">
+        <script src="./lib/jquery.min.js"></script>
+        <link rel="stylesheet" href="./lib/index.css">
+    </head>
+    <body>
+        <script src="./lib/Vector2.min.js"></script><!-- 向量类，包含基本向量运算 -->
+        <script src="./lib/dat.gui.min.js"></script><!-- 用于生成播放菜单控件 -->
+        <audio id="audio"></audio>
+        <div id="background"></div>
+        <div id="loader">
+            <div id="spinner"></div>
+            <h2 id="loading-text">
+                Loading...
+            </h2>
+        </div>
+        <h1 id="title"></h1>
+        <canvas id="canvas"></canvas>
+
+        <script>
+            (function(main) {
+                main(this, document, Vector2, undefined);
+            })
+            (function(window, document, vec2){
+                //创建音乐因子对象
+                var Particle = (function() {
+                    function Particle(index, parent) {
+                        this.parent = parent;   //父体
+                        this.index = index;     //索引
+                        this.minSize = 5;       //最小尺寸
+                        this.init();            //初始化
+                    }
+                    return Particle;
+                })();
+
+                //声明音乐因子初始化函数
+                Particle.prototype.init = function() {
+                    this.freqVal = this.parent.freqData[this.index] * 0.01;
+                    this.size = (this.freqVal * 20) + this.minSize;
+                    this.position = new Vector2(Math.random() * this.parent.dimensions.x, this.parent.dimensions.y + this.size);
+                    this.velocity = new Vector2(2 - Math.random() * 4, 0);
+                };
+
+                //声明音乐因子更新函数
+                Particle.prototype.update = function() {
+                    this.freqVal = this.parent.freqData[this.index] * 0.01;
+
+                    this.size = (this.freqVal * 20) + this.minSize;
+                    this.offset = this.size / 2;
+
+                    this.hue = ((this.index / this.parent.bufferLen) * 360) + 120 + this.parent.tick / 6;
+                    this.saturation = this.freqVal * 35;
+                    this.alpha = this.freqVal * 0.3;
+
+                    this.fill = 'hsla(' + this.hue + ',' + this.saturation + '%,50%,' + this.alpha + ')';
+
+                    this.lift = Math.pow(this.freqVal, 3);
+
+                    this.position.subY(this.lift);
+                    this.position.add(this.velocity);
+
+                    this.checkBounds();
+                };
+
+                //声明音乐因子检查边缘函数
+                Particle.prototype.checkBounds = function() {
+                    if (this.position.y < -this.size || this.position.x < -this.parent.dimensions.x*0.25 || this.position.x > this.parent.dimensions.x*1.25) {
+                        this.init();
+                    }
+                };
+
+                //创建本应用对象App
+                var App = (function() {
+                    function App() {
+                        this.tick = 0;
+                        this.currentSong = 1;
+                        this.dark = false;
+                        this.wave = true;
+                        this.globalMovement = new vec2();
+                        this.initCanvas();
+                        this.initUI();
+                        this.initAudio();
+                        this.loadAudio();
+                        this.populate();
+                        this.render();
+                    }
+                    return App;
+                })();
+
+                App.prototype.initCanvas = function() {
+                    this.canvas = document.getElementById('canvas');
+                    this.ctx = this.canvas.getContext('2d');
+                    this.dimensions = {};
+                    this.resize();
+                };
+
+                App.prototype.resize = function() {
+                    this.canvas.width = this.dimensions.x = window.innerWidth;
+                    this.canvas.height = this.dimensions.y = window.innerHeight;
+                };
+
+                App.prototype.initUI = function() {
+                    var self = this;
+                    this.background = document.getElementById('background');
+                    this.title = document.getElementById('title');
+                    this.btnPlay = document.getElementById('check-audio-toggle');
+
+                    this.gui = new dat.GUI();
+                    this.switchSong = this.gui.add(this, 'currentSong').min(1).max(5).step(1).listen();
+                    this.switchSong.onFinishChange(function(value) {
+                        self.loadAudio();
+                    });
+                    this.toggleBackground = this.gui.add(this, 'dark');
+                    this.toggleBackground.onFinishChange(function(value) {
+                        if (value) self.background.classList.add('hidden');
+                        else if (!value) self.background.classList.remove('hidden');
+                    });
+                    this.gui.add(this,'wave');
+                };
+
+                App.prototype.initAudio = function() {
+                    var self = this;
+                    this.baseURL = './lib/';
+                    this.fileNames = ['dmwaltz.mp3', 'nocturne92.mp3', 'mozart25.mp3', 'trista.mp3', 'waltzflowers.mp3'];
+                    this.songTitles = ['华尔兹2号——肖斯塔科维奇', '夜曲第九章No.2——弗里德里克·肖邦', '交响乐25号——莫扎特', 'Tristorosa——维拉-洛博斯 ', '花之圆之舞——柴科夫斯基'];
+
+                    this.audio = document.getElementById('audio');
+                    this.audio.addEventListener('ended', function() {
+                        self.audio.currentTime = 0;
+                        self.audio.pause();
+                        self.btnPlay.checked = false;
+                        self.currentSong = self.currentSong < self.fileNames.length ? self.currentSong + 1 : 1;
+                        self.loadAudio();
+                    });
+                    this.audioCtx = new AudioContext();
+
+                    this.analyser = this.audioCtx.createAnalyser();
+                    this.source = this.audioCtx.createMediaElementSource(this.audio);
+
+                    this.source.connect(this.analyser);
+                    this.analyser.connect(this.audioCtx.destination);
+
+                    this.bufferLen = this.analyser.frequencyBinCount;
+                    this.freqData = new Uint8Array(this.bufferLen);
+                };
+
+                App.prototype.loadAudio = function() {
+                    var self = this;
+
+                    this.btnPlay.classList.add('disabled');
+                    this.background.classList.add('loading');
+
+                    var request = new XMLHttpRequest();
+
+                    request.open('GET', this.baseURL + this.fileNames[this.currentSong - 1], true);
+                    request.responseType = 'blob';
+
+                    request.onload = function() {
+                        self.title.innerHTML = self.songTitles[self.currentSong - 1];
+                        self.btnPlay.classList.remove('disabled');
+                        self.background.classList.remove('loading');
+
+                        self.audio.src = window.URL.createObjectURL(request.response);
+                        self.audio.play();
+
+                        self.btnPlay.checked = true;
+                        self.btnPlay.onchange = function(e) {
+                            if (this.checked) {
+                                self.audio.play();
+                            } else {
+                                self.audio.pause();
+                            }
+                        };
+                    }
+
+                    request.send();
+                }
+
+                App.prototype.populate = function() {
+                    this.particles = [];
+                    for (var i = 0; i < this.bufferLen; i++) {
+                        this.particles.push(new Particle(i, this));
+                    }
+                    console.log('populated');
+                };
+
+                App.prototype.draw = function() {
+                    this.ctx.clearRect(0, 0, this.dimensions.x, this.dimensions.y);
+                    this.ctx.save();
+                    for (var i = 0, len = this.particles.length; i < len; i++) {
+                        var particle = this.particles[i];
+                        particle.update();
+                        if (particle.freqVal > 0) {
+                            if(this.wave) particle.position.add(this.globalMovement);
+                            this.ctx.beginPath();
+                            this.ctx.fillStyle = particle.fill;
+                            this.ctx.beginPath();
+                            this.ctx.arc(particle.position.x, particle.position.y, particle.size, 0, Math.PI * 180);
+                            this.ctx.fill();
+                            this.ctx.closePath();
+                        }
+                    }
+                    this.ctx.restore();
+                };
+
+                App.prototype.render = function() {
+                    var self = this;
+                    this.tick++;
+                    if(this.wave) this.globalMovement.x = Math.sin(this.tick * 0.01) * 2;
+                    this.analyser.getByteFrequencyData(this.freqData);
+                    this.draw();
+                    window.requestAnimationFrame(self.render.bind(self));
+                };
+
+                //调用以上对象类实现主程序
+                window.onload = function() {
+                    var app = new App;
+                    window.onresize = function() {
+                        app.resize();
+                    }
+                };
+
+                window.requestAnimationFrame = (function() {
+                    return window.requestAnimationFrame ||
+                    window.webkitRequestAnimationFrame ||
+                    window.mozRequestAnimationFrame ||
+                    window.oRequestAnimationFrame ||
+                    window.msRequestAnimationFrame ||
+                    function(callback) {
+                        window.setTimeout(callback, 1000 / 60);
+                    };
+                })();
+            });
+    </script>
+    <div id="audio-toggle-container">
+        <input id="check-audio-toggle" type="checkbox">
+        <label id="lbl-audio-toggle" for="check-audio-toggle"></label>
+    </div>
+    </body>
+</html>
