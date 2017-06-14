@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8"/>
+    <title>heatmap.js 展示案例</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow"/>
+    <meta name="description" content="A detailed list of public heatmap.js showcases"/>
+    <meta name="keywords" content="heatmap.js in the wild, heatmap.js showcases"/>
+    <link rel="stylesheet" href="assets/css/commons.css"/>
+    <style>
+        html{
+            color:#333;
+            font-family:sans-serif;
+            font-size:16pt;
+            font-weight:100;
+            line-height:1.4em
+        }
+        h1{
+            text-align:center
+        }
+        ul{
+            list-style-type:none
+        }
+        ul.taglist{
+            margin-top:5px;
+            margin-left:10px;
+            padding-left:0;
+            font-size:12px;
+            display:none
+        }
+        li.tag{
+            padding:2px 6px;
+            border-radius:5px;
+            background:rgba(0,0,0,.1);
+            display:inline
+        }
+        li.showcase a{
+            font-size:1.6em;
+            margin-left:10px;
+            margin-top:10px;
+            color:#000;
+            text-decoration:none;
+            border-bottom:1px dotted #000
+        }
+        li.showcase{
+            margin-top:10px;
+            height:110px
+        }
+        img.thumb{
+            float:left;
+            margin-top:-5px
+        }
+        .excerp{
+            float:left;
+            margin-left:10px;
+            font-size:18px;
+            color:rgba(0,0,0,.7);
+            width:640px;
+            overflow:hidden
+        }
+        .excerp a{
+            font-size:16pt!important;
+            margin-left:0!important;
+            border:none!important
+        }
+        strong{
+            letter-spacing:-1px
+        }
+        .showcaseSubmit{
+            height:0;
+            -webkit-transition:.6s height ease;
+            transition:height .6s ease;
+            overflow:hidden;
+            width:100%;
+            position:relative;
+            text-align:center;
+            padding-bottom:20px
+        }
+        .showcaseSubmit.open{
+            height:300px;
+            margin:0
+        }
+        .showcaseSubmit input{
+            padding:5px;
+            font-size:20px;
+            width:350px;
+            margin-top:5px
+        }
+        img{
+            opacity:.8;
+            -webkit-transition:all .2s ease;
+            transition:all .2s ease;
+            margin-top:-10px
+        }
+        .showcase:hover img{
+            opacity:1
+        }
+        @media (max-width:500px){
+            li.showcase a{
+                font-size:.7em
+            }
+            img.thumb{
+                margin-top:10px
+            }
+        }
+    </style>
+</head>
+<body>
+  <div class="wrapper">
+    <h1>heatmap.js 展示案例列表</h1>
+    <ol class="breadcrumb-trail">
+        <li><a href="index.html" title="heatmap.js dynamic heatmaps for the web">heatmap.js</a></li>
+        <li>案例展示</li>
+    </ol>
+    <ul>
+      <li class="showcase">
+        <img src="assets/img/showcase-fifa.jpg" width="100" height="100" class="thumb" alt="FIFA 足球运动员移动热力图" />
+        <a href="https://web.archive.org/web/20140701005014/http://www.fifa.com/worldcup/players/player=196748/index.html" rel="nofollow" target="_blank">足球运动员移动热力图</a> 来自 <strong>FIFA</strong>
+        <div class="excerp">
+         热力图覆盖层放置在一个运动场的图像上，可视化足球运动员在FIFA游戏统计的移动情况。
+        </div>
+      </li>
+      <li class="showcase">
+        <img src="assets/img/showcase-gps-cambridge.jpg" alt="gps heatmap Dr. Adryan cambridge" width="100" height="100" class="thumb"/>
+        <a href="http://logic.sysbiol.cam.ac.uk/?p=1466" rel="nofollow" target="_blank">实时GPS可视化</a> 来自 <strong>鲍里斯·阿德里恩博士</strong>
+        <div class="excerp">
+          接收来自Node-RED的实时更新的地理空间热图，以便可视化GPS位置
+          地理空间热力图接收来自<code>Node-RED</code>的实时更新数据来可视化<code>GPS</code>位置。
+        </div>
+      </li>
+      <li class="showcase">
+        <img src="assets/img/showcase-hsldepartures.jpg" width="100" height="100" class="thumb" alt="Helsinki Departures Heatmap"/>
+        <a href="http://hslheatmap.ampli.fi/" rel="nofollow" target="_blank">HSL出行热力图</a> 来自 <strong>诺·凯库科恩</strong>
+        <div class="excerp">
+          地理空间热力图可以看出赫尔辛基每个公交站的出发次数。(<a href="http://blog.ampli.fi/hsl-departures-heatmap/" rel="nofollow" target="_blank">了解更多</a>)
+        </div>
+      </li>
+      <li class="showcase">
+        <img src="assets/img/showcase-crimeheatmap.jpg" width="100" height="100" class="thumb"/>
+        <a href="http://www.crimeheatmap.ca" rel="nofollow" target="_blank">犯罪热力图</a> 来自 <strong>大卫HAMP-贡萨尔维斯</strong>
+        <div class="excerp">
+          动画地理空间热力图可视化犯罪事件密度随时间变化
+        </div>
+      </li>
+      <li class="showcase">
+        <img src="assets/img/showcase-forrest.jpg" width="100" height="100" class="thumb"/>
+        <a href="http://forestmaps.informatik.uni-freiburg.de/heatmap-gui/heatmap-server/" rel="nofollow" target="_blank">森林地图 </a> 来自 <strong>弗莱堡大学</strong>
+        <div class="excerp">
+          Heatmap.js热力图可视化森林利用率的地图层。
+        </div>
+      </li>
+      <li class="showcase">
+        <img src="assets/img/showcase-dxheat.jpg" width="100" height="100" class="thumb"/>
+        <a href="http://www.dxheat.com/dxc/">响应式DX聚类 </a> 来自 <strong>托比亚斯·韦尼茨</strong>
+        <div class="excerp">
+          利用热力图可视化带状活动。
+        </div>
+      </li>
+      <li class="showcase">
+        <img src="assets/img/showcase-bikes.jpg" width="100" height="100" class="thumb"/>
+        <a href="http://ou-sont-les-velos.seminar.io/" rel="nofollow" target="_blank">自行车在哪里？</a> 来自 <strong>巴波罗·塞米纳洛</strong>
+        <div class="excerp">
+          一个热图，实时显示了自行车在法国南特的自行车共享系统中的分布情况。
+        </div>
+      </li>
+      <li class="showcase">
+        <img src="assets/img/showcase-getclicky.jpg" width="100" height="100" class="thumb"/>
+        <a href="http://clicky.com/blog/304/heatmaps" rel="nofollow">Heatmap 网站分析</a> 来自 <strong>getclicky网站</strong>
+        <div class="excerp">
+          在getclicky中用户鼠标点击和移动热图，使用heatmap.js完成。
+        </div>
+      </li>
+      <li class="showcase">
+        <img src="assets/img/showcase-rockstar.jpg" width="100" height="100" class="thumb"/>
+        <a href="http://www.rockstargames.com/newswire/article/46291/new-at-social-club-multiplayer-match-reports.html" rel="nofollow" target="_blank">社交俱乐部赛事统计</a> 来自 <strong>Rockstar游戏</strong>
+        <div class="excerp">
+          Max Payne 3游戏地图的热图叠加表示闪点和瓶颈。
+        </div>
+      </li>
+      <li class="showcase">
+        <img src="assets/img/showcase-heatmapkeyboard.jpg" width="100" height="100" class="thumb"/>
+        <a href="http://www.patrick-wied.at/projects/heatmap-keyboard/" target="_blank">键盘热力图</a> 来自 <strong>帕特里克·韦德</strong>
+        <div class="excerp">
+          实时键盘热图显示文本的字符分布
+        </div>
+      </li>
+      <li class="showcase">
+        <img src="assets/img/showcase-adayinthelife.jpg" width="100" height="100" class="thumb"/>
+        <a href="http://heatmapdemo.alastair.is/" rel="nofollow" target="_blank">生活中的一天</a> 来自 <strong>阿拉斯泰尔·库特</strong>
+        <div class="excerp">
+          《纽约时报》生活中的一整天的全屏leaflet热力图层动画
+        </div>
+      </li>
+      <li class="showcase">
+        <img src="assets/img/showcase-dui.jpg" width="100" height="100" class="thumb"/>
+        <a href="http://utveckling.ylebloggen.fi/2013/03/21/dui-heatmap-finland-2012/" rel="nofollow" target="_blank">在FI影响下的驾驶行为</a> 来自 <strong>亚诺·马特勒</strong>
+        <div class="excerp">
+          2012年芬兰在事件影响下行驶情况的热力图覆盖层。
+        </div>
+      </li>
+      <li class="showcase">
+        <img src="assets/img/showcase-nearbynow.jpg" width="100" height="100" class="thumb"/>
+        <a href="http://www.nearbynow.co/profile/electrician/electramedics" rel="nofollow" target="_blank">当前附近</a> 来自 <strong>巴里·哈克尼斯</strong>
+        <div class="excerp">
+          谷歌热力图层，显示你周围服务的实时数据。
+        </div>
+      </li>
+      <li class="showcase">
+        <img src="assets/img/showcase-greenworld.jpg" width="100" height="100" class="thumb">
+        <a href="http://blog.triposo.com/2013/03/green-world.html" rel="nofollow" target="_blank">绿色世界</a> 来自 <strong>Triposo网站</strong>
+        <div class="excerp">
+          主要是绿色的热图，显示了世界上爱尔兰酒吧的分布情况。
+        </div>
+      </li>
+      <li class="showcase">
+        <img src="assets/img/showcase-goodmorning.jpg" width="100" height="100" class="thumb"/>
+        <a href="http://www.huffingtonpost.com/2012/08/20/twitter-heatmap-good-morning-fck-you_n_1811065.html" rel="nofollow" target="_blank">早上好 &amp; FU 推特地图</a>
+        <div class="excerp">
+          密度热力图，显示推特关键字随时间推移的频率变化。
+        </div>
+      </li>
+    </ul>
+  </div>
+</body>
+</html>

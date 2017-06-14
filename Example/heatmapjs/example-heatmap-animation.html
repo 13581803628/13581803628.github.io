@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8"/>
+        <title>Heatmap 动画示例</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="robots" content="index, follow"/>
+        <meta name="description" content="学习使用 heatmap 动画"/>
+        <meta name="keywords" content="animated heatmap, heatmap animation, heatmap.js, heatmap config"/>
+        
+        <link rel="stylesheet" href="assets/css/commons.css"/>
+        <link rel="stylesheet" href="assets/css/example-commons.css"/>
+        <link rel="stylesheet" href="assets/third-party/prism/prism.css"/>  
+        <link rel="stylesheet" href="assets/css/bootstrap.min.css"/>
+        <style>
+        body{
+            font-size: 18px;
+        }
+            .demo-wrapper{
+                position:relative
+            }
+            .timeline-wrapper{
+                position:absolute;
+                top:10px;
+                left:10px;
+                right:10px;
+                height:30px;
+                background:#fff;
+                transition:1s ease all;
+                border-radius:4px;
+                box-shadow:0 1px 5px rgba(0,0,0,.65)
+            }
+            .heatmap-timeline{
+                position:absolute;
+                top:0;
+                right:15px;
+                left:45px;
+                height:100%
+            }
+            .heatmap-timeline .line{
+                position:absolute;
+                left:0;
+                right:0;
+                top:15px;
+                height:2px;
+                background:#d7d7d7
+            }
+            .heatmap-timeline .time-point.active{
+                background:#000
+            }
+            .heatmap-timeline .time-point{
+                position:absolute;
+                background:#fff;
+                border:2px solid #272727;
+                width:8px;
+                height:8px;
+                border-radius:100%;
+                cursor:pointer;
+                top:15px;
+                transform:translateX(-50%) translateY(-50%)
+            }
+            .heatmap-timeline .time-point:hover{
+                box-shadow:0 0 5px black
+            }
+            .heatmap-timeline .time-point.active{
+                background:#000
+            }
+            .btn{
+                border:none;
+                height: 100%;
+                margin-left: 0;
+            }
+            .btn.active.focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn:active:focus, .btn:focus {
+                outline: 0px auto white;
+                /* outline-offset: -2px; */
+            }
+        </style>
+    </head>
+    <body>
+        <div class="wrapper">
+            <h1>Heatmap 动画示例</h1>
+            <ol class="breadcrumb-trail">
+                <li><a href="" title="heatmap.js dynamic heatmaps for the web">heatmap.js</a></li>
+                <li><a href="examples.html" title="list of heatmap.js examples">Heatmap 范例</a></li>
+                <li>Heatmap 动画示例</li>
+            </ol>
+            此示例显示如何使用时间序列数据为热力图绘制动画。该示例假定每个数据帧与之前的帧等距。<code>AnimationPlayer</code>的数据格式是一组热图数据对象。即：<code>[{min，max，data}，{min，max，data}，...] </code>
+
+            <br style="clear:both"/>
+            <h2>演示</h2>
+            <div class="demo-wrapper">
+
+                <div class="heatmap"></div>
+                <div class="timeline-wrapper"></div>
+            </div>
+            <div class="demo-controls">
+                <button class="trigger-refresh btn" data-fps="10" style="margin-left:5px;">速度设置为 10帧/秒</button>
+                <button class="trigger-refresh btn" data-fps="5" style="margin-left:5px;">速度设置为 5帧/秒</button>
+                <button class="trigger-refresh btn" data-fps="1" >速度设置为 1帧/秒</button>
+                <br style="clear:both"/>
+            </div>
+            <h2>代码</h2>
+            <pre><code class="language-javascript">
+// 创建一个类来包装热图循环逻辑
+function AnimationPlayer(options) {
+    this.heatmap = options.heatmap;
+    this.data = options.data;
+    this.interval = null;
+    this.animationSpeed = options.animationSpeed || 300;
+    this.wrapperEl = options.wrapperEl;
+    this.isPlaying = false;
+    this.init();
+};
+// 定义这个函数对象的原型链
+AnimationPlayer.prototype = {
+    init: function() {
+        var dataLen = this.data.length;
+        this.wrapperEl.innerHTML = '';
+        var playButton = this.playButton = document.createElement('button');
+        playButton.onclick = function() {
+            if (this.isPlaying) {
+            this.stop();
+            } 
+            else {
+                this.play();
+            }
+            this.isPlaying = !this.isPlaying;
+        }.bind(this);
+        playButton.innerText = 'play';
+        //上面演示使用了 bootstrap 的图标，代码如下：
+        //playButton.innerHTML = "&lt;span class=\"glyphicon glyphicon-play\" aria-hidden=\"true\">&lt;/span>";
+
+        this.wrapperEl.appendChild(playButton);
+
+        var events = document.createElement('div');
+        events.className = 'heatmap-timeline';
+        events.innerHTML = '&lt;div class="line">&lt;/div>';
+
+        for (var i = 0; i &lt; dataLen; i++) {
+
+            var xOffset = 100/(dataLen - 1) * i;
+
+            var ev = document.createElement('div');
+            ev.className = 'time-point';
+            ev.style.left = xOffset+'%';
+
+            ev.onclick = (function(i) {
+                return function() {
+                    this.isPlaying = false;
+                    this.stop();
+                    this.setFrame(i);
+                }.bind(this);
+            }.bind(this))(i);
+
+            events.appendChild(ev);
+
+        }
+        this.wrapperEl.appendChild(events);
+        this.setFrame(0);
+    },
+    play: function() {
+        var dataLen = this.data.length;
+        this.playButton.innerText = 'pause';
+
+        //上面演示使用了 bootstrap 的图标，代码如下：
+        //playButton.innerHTML = "&lt;span class=\"glyphicon glyphicon-pause\" aria-hidden=\"true\">&lt;/span>";
+
+        this.interval = setInterval(function() {
+            this.setFrame(++this.currentFrame%dataLen);
+        }.bind(this), this.animationSpeed)
+    },
+    stop: function() {
+        clearInterval(this.interval);
+        this.playButton.innerText = 'play';
+        
+        //上面演示使用了 bootstrap 的图标，代码如下：
+        //playButton.innerHTML = "&lt;span class=\"glyphicon glyphicon-play\" aria-hidden=\"true\">&lt;/span>";
+
+    },
+    setFrame: function(frame) {
+        this.currentFrame = frame;
+        var snapshot = this.data[frame];
+        this.heatmap.setData(snapshot);
+        var timePoints = $('.heatmap-timeline .time-point');
+        for (var i = 0; i &lt; timePoints.length; i++) {
+            timePoints[i].classList.remove('active');
+        }
+        timePoints[frame].classList.add('active');
+    },
+    setAnimationData: function(data) {
+        this.isPlaying = false;
+        this.stop();
+        this.data = data;
+        this.init();
+    },
+    setAnimationSpeed: function(speed) {
+        this.isPlaying = false;
+        this.stop();
+        this.animationSpeed = speed;
+    }
+};
+
+var heatmapInstance = h337.create({
+    container: document.querySelector('.heatmap')
+});
+
+// animationData 包含一个 heatmap 数据对象队列
+var animationData = [];
+
+// 生成一些数据对象
+for (var i = 0; i &lt; 20; i++) {
+    animationData.push(generateRandomData(300));
+}
+
+var player = new AnimationPlayer({
+    heatmap: heatmapInstance,
+    wrapperEl: document.querySelector('.timeline-wrapper'),
+    data: animationData,
+    animationSpeed: 100
+});
+            </code></pre>
+        </div>
+        <script src="assets/js/heatmap.min.js"></script>
+        <script>
+            window.onload=function(){
+                function generateRandomData(len){
+                    var points=[];
+                    var max=0;
+                    var width=840;
+                    var height=400;
+                    while(len--){
+                        var val=Math.floor(Math.random()*100);
+                        max=Math.max(max,val);
+                        var point={
+                            x:Math.floor(Math.random()*width),
+                            y:Math.floor(Math.random()*height),
+                            value:val
+                        };
+                        points.push(point);
+                    }
+                    var data={
+                        max:max,
+                        data:points
+                    };
+                    return data;
+                }
+                function $(selector){
+                    return document.querySelectorAll(selector);
+                }
+                function AnimationPlayer(options){
+                    this.heatmap=options.heatmap;
+                    this.data=options.data;
+                    this.interval=null;
+                    this.animationSpeed=options.animationSpeed||300;
+                    this.wrapperEl=options.wrapperEl;
+                    this.isPlaying=false;
+                    this.init();
+                };
+                AnimationPlayer.prototype={
+                    init:function(){
+                        var dataLen=this.data.length;
+                        this.wrapperEl.innerHTML='';
+                        var playButton=this.playButton=document.createElement('button');
+                        playButton.onclick=function(){
+                            if(this.isPlaying){
+                                this.stop();
+                            }
+                            else{
+                                this.play();
+                            }
+                            this.isPlaying=!this.isPlaying;
+                        }.bind(this);
+                        playButton.classList = "btn btn-default";
+                        playButton.innerHTML="<span class=\"glyphicon glyphicon-play\" aria-hidden=\"true\"></span>";
+                        this.wrapperEl.appendChild(playButton);
+                        var events=document.createElement('div');
+                        events.className='heatmap-timeline';
+                        events.innerHTML='<div class="line"></div>';
+                        for(var i=0;i<dataLen;i++){
+                            var xOffset=100/(dataLen-1)*i;
+                            var ev=document.createElement('div');
+                            ev.className='time-point';
+                            ev.style.left=xOffset+'%';
+                            ev.onclick=(function(i){
+                                return function(){
+                                    this.isPlaying=false;
+                                    this.stop();
+                                    this.setFrame(i);
+                                }.bind(this);
+                            }.bind(this))(i);
+                            events.appendChild(ev);
+                        }
+                        this.wrapperEl.appendChild(events);
+                        this.setFrame(0);
+                    },
+                    play:function(){
+                        var dataLen=this.data.length;
+                        this.playButton.innerHTML='<span class=\"glyphicon glyphicon-pause\" aria-hidden=\"true\"></span>';
+                        this.interval=setInterval(function(){
+                            this.setFrame(++this.currentFrame%dataLen);
+                        }.bind(this),this.animationSpeed);
+                    },
+                    stop:function(){
+                        clearInterval(this.interval);
+                        this.playButton.innerHTML='<span class=\"glyphicon glyphicon-play\" aria-hidden=\"true\"></span>';
+                    },
+                    setFrame:function(frame){
+                        this.currentFrame=frame;
+                        var snapshot=this.data[frame];
+                        this.heatmap.setData(snapshot);
+                        var timePoints=$('.heatmap-timeline .time-point');
+                        for(var i=0;i<timePoints.length;i++){
+                            timePoints[i].classList.remove('active');
+                        }
+                        timePoints[frame].classList.add('active');
+                    },
+                    setAnimationData:function(data){
+                        this.isPlaying=false;
+                        this.stop();
+                        this.data=data;
+                        this.init();
+                    },
+                    setAnimationSpeed:function(speed){
+                        this.isPlaying=false;this.stop();
+                        this.animationSpeed=speed;
+                    }
+                };
+                var heatmapInstance=h337.create({container:document.querySelector('.heatmap')});
+                var animationData=[];
+                for(var i=0;i<20;i++){
+                    animationData.push(generateRandomData(300));
+                }
+                var player=new AnimationPlayer({
+                    heatmap:heatmapInstance,
+                    wrapperEl:document.querySelector('.timeline-wrapper'),
+                    data:animationData,
+                    animationSpeed:500
+                });
+                var controlButtons=$('.trigger-refresh');
+                for(var i=0;i<controlButtons.length;i++){
+                    controlButtons[i].onclick=function(){
+                        var fps=this.dataset.fps;
+                        player.setAnimationSpeed(1/(+fps)*1000);
+                    };
+                } 
+            };
+        </script>
+        <script src="assets/third-party/prism/prism.js"></script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8"/>
+    <title>Angular 热力图指令插件</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow"/>
+    <meta name="description" content="API documentation, example usage, and description of the AngularJS Heatmap Directive"/>
+    <meta name="keywords" content=" leaflet heatmap, leaflet heat"/>
+    <link rel="stylesheet" href="assets/css/commons.css"/>
+    <link rel="stylesheet" href="assets/css/plugin-commons.css"/>
+    <link rel="stylesheet" href="assets/third-party/prism/prism.css"/>
+    <style>
+        .hero{
+            display:block;
+            margin:auto;
+            height:200px;
+            margin-top:20px;
+            margin-bottom:20px;
+            box-shadow:0 0 4px rgba(0,0,0,.6)
+        }
+    </style>
+</head>
+<body>
+  <div class="wrapper">
+    <h1>Angular 热力图指令插件</h1>
+    <ol class="breadcrumb-trail">
+        <li><a href="" title="heatmap.js dynamic heatmaps for the web">heatmap.js</a></li>
+        <li><a href="plugins.html" title="list of heatmap.js plugins">Heatmap 插件</a></li>
+        <li>Angular 热力图</li>
+    </ol>
+    <!--<div class="info">This plugin is not maintained within heatmap.js. Download and repo link is provided here</div> -->
+    <br><p>对 <code>heatmap.js</code> 进行封装，使它可以使用<code>AngularJS</code>指令。</p><br>
+    <p>这个插件是依赖于实际的 <code>heatmap.js</code>库。如果你下载了<code>heatmap.js</code>，你还可以下载最新版本的<code>angular-heatmap.js</code>。</p><br>
+    <div class="align-center"><a href="asserts/js/angular-heatmap.js" class="btn-center" rel="nofollow" target="_blank" download="angular-heatmap">下载 angular 热力图指令插件</a></div>
+    <!-- <button class="thankyou btn">thank you, this plugin is awesome</button> -->
+      <br style="clear:both"/>
+
+    <h2>说明文档</h2>
+    <h3>安装</h3>
+    在<code>heatmap.js</code>下面添加<code>angular-heatmap.js</code>（在网页头部或在关闭<code>body</code>之前），并在应用中注入<code>heatmap</code>模块。一个<code>heatmap</code>指令可以采用以下属性： <code>id</code>、<code>data</code>、<code>config</code>、<code>width</code>、<code>height</code>，<code>data</code>是典型的<code>heatmap.js</code>数据对象，<code>config</code>是典型的配置对象。
+    <h3>API</h3>
+    <code>angular-heatmap.js</code>插件输出一个名为<code>$heatmap</code>的服务，可以直接访问你的热力图实例。
+    <ul>
+      <li><strong>getInstance(id)</strong><br/>返回<code>id=[id]</code>的热力图实例对象<br/><br/></li>
+      <li><strong>getAllInstances()</strong><br/> 返回所有存在的热力图实例对象</li>
+    </ul>
+    <h2>示例</h2>
+    点击查看 <a href="example-angular-heatmap.html" title="angular heatmap example">在线示例</a>.
+    <pre><code class="language-javascript">
+// 完整的指令用法范例
+// &lt;heatmap id="myHeatmapInstance" data="myHeatmapData" config="myHeatmapCfg"&gt;&lt;/heatmap&gt;
+
+// => heatmap 指令将自动对 myHeatmapData ＆ myHeatmapCfg 的更改做出反应。
+// => 你可以通过 $heatmap.getInstance('myHeatmapInstance') 手动访问 heatmap 实例</code></pre>
+  </div>
+  <script src="assets/third-party/prism/prism.js"></script>
+</body>
+</html>

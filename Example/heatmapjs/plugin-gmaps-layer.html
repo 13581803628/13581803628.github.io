@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"/>
+  <title>谷歌地图热力图层插件</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index, follow"/>
+  <meta name="description" content=" heatmap.js 谷歌热力图层插件的 API 文档和一些例子"/>
+  <meta name="keywords" content="googlemaps heatmap, heatmap.js, gmaps heatmap, gmap heat"/>
+  <link rel="stylesheet" href="assets/css/commons.css"/>
+  <link rel="stylesheet" href="assets/css/plugin-commons.css"/>
+  <link rel="stylesheet" href="assets/third-party/prism/prism.css"/>
+  <style>
+    .hero{
+      display:block;
+      margin:auto;
+      height:200px;
+      margin-top:20px;
+      margin-bottom:20px;
+      box-shadow:0 0 4px rgba(0,0,0,.6)
+    }
+    </style>
+</head>
+<body>
+  <div class="wrapper">
+    <h1>Gmaps 热力图层插件</h1>
+    <ol class="breadcrumb-trail">
+        <li><a href="index.html" title="heatmap.js dynamic heatmaps for the web">heatmap.js</a></li>
+        <li><a href="plugins.html" title="list of heatmap.js plugins">插件</a></li>
+        <li>Gmaps 热力图层插件</li>
+    </ol>
+    <!--<div class="info">This plugin is not maintained within heatmap.js. Download and repo link is provided here</div> -->
+    <br/>给谷歌地图创建热力图层的一个插件。<br/>
+    <img class="hero" src="assets/img/plugin-googlemaps-heatmap-big.jpg" alt="gmaps heatmap layer plugin"/>
+    这个插件是依赖于实际的 <code>heatmap.js</code>存储库的。如果你下载了<code>heatmap.js</code>，你还可以下载最新版本的<code>gmap-heatmap.js</code>。<br/><br/>
+    <div class="align-center"><a href="asserts/js/gmaps-heatmap.js" class="btn-center" rel="nofollow" target="_blank" download="gmaps-heatmap">下载谷歌地图热力图层插件</a></div>
+    <br/>它是由社区贡献的，目前在 <a href="https://github.com/pa7/heatmap.js/tree/develop/plugins" rel="nofollow" target="_blank">github </a>上托管。<br/>
+    <!-- <button class="thankyou btn">thank you, this plugin is awesome</button> -->
+      <br style="clear:both"/>
+
+    <h2>说明文档</h2>
+    <h3>安装</h3>
+    在<code>heatmap.js</code>下面添加<code>gmaps-heatmap.js</code>（在网页头部或在关闭<code>body</code>之前）。 <code>HeatmapOverlay</code>实例有两个参数：地图实例，以及一个配置选项对象。
+    
+    <h3>配置选项</h3>
+    配置选项通过配置对象传递给插件。
+    <ul>
+      <li><strong>scaleRadius</strong> <code>boolean</code> <span>可选</span> 默认值为 <code>false</code><br/>
+        是否应将辐射半径映射到相应的缩放级别。<br/><br/>
+      </li>
+      <li><strong>radius</strong> <code>integer</code> <span>可选</span> 默认值为 <code>15</code><br/>
+        定义数据点的半径。<strong>注意</strong>：如果<code>scaleRadius</code>为<code>false</code>，则以像素为单位测量半径。 如果scaleRadius为真，则按地图的比例进行测量。<br/><br/>
+      </li>
+      <li><strong>useLocalExtrema</strong> <code>boolean</code> <span>可选</span> 默认值为 <code>false</code><br/>
+        定义热图是否应该通过<code>setData/addData</code>使用全局极值集或局部极值（当前显示的视口的最大和最小值）
+      </li>
+    </ul>
+    <h3>API</h3>
+
+    <ul>
+      <li>
+      <strong>addData</strong><br/>
+      就像标准的<code>heatmap.js</code> 的 <code>addData</code>一样<br/><br/>
+      </li>
+      <li><strong>setData</strong><br/>就像标准的<code>heatmap.js</code> 的 <code>setData</code>一样</li>
+    </ul>
+    <h2>例子</h2>
+    查看 <a href="example-heatmap-googlemaps.html" title="googlemaps heatmap example">在线示例</a>.
+    <pre><code class="language-javascript">
+// 不要忘了添加 gmaps-heatmap.js 库
+var myLatlng = new google.maps.LatLng(25.6586, -80.3568);
+// 地图参数
+var myOptions = {
+    zoom: 3,
+    center: myLatlng
+};
+// 标准地图
+map = new google.maps.Map(document.getElementById("map-canvas"), myOptions);
+// 热力图层
+heatmap = new HeatmapOverlay(map, {
+    // 半径设置应较小，只有当 scaleRadius 设置为 true （或者小半径是有意的）
+    "radius": 2,
+    "maxOpacity": 1, 
+    // 根据地图缩放级别缩放半径
+    "scaleRadius": true, 
+    // 如果设置为 false ，热图使用全局极值来赋色
+    // 如果设置为 true：使用当前视窗内数据极值（这样做的话视窗内会一直有红点） 
+    "useLocalExtrema": true,
+    // 你的数据中表示纬度的字段 - 默认为 "lat"
+    latField: 'lat',
+    // 你的数据中表示经度的字段 - 默认为 "lng"
+    lngField: 'lng',
+    // 你的数据中表示数据值的字段 - 默认为 "value"
+    valueField: 'count'
+});
+
+var testData = {
+    max: 8,
+    data: [{lat: 24.6408, lng:46.7728, count: 3},{lat: 50.75, lng:-1.55, count: 1}, ...]
+};
+
+heatmap.setData(testData);</code></pre>
+  </div>
+  <script src="assets/third-party/prism/prism.js"></script>
+</body>
+</html>

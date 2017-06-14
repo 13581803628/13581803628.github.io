@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8"/>
+        <title>学习 heatmap.js 范例</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="robots" content="index, follow"/>
+        <meta name="description" content="通过下列例子学习如何使用 heatmap.js"/>
+        <meta name="keywords" content="热力图范例, heatmap.js 范例, 动态热力图"/>
+        <link rel="icon" type="image/png" href="assets/img/favicon.png"/>
+        <link rel="stylesheet" href="assets/css/commons.css"/>
+        <link rel="stylesheet" href="assets/css/example-commons.css"/>
+        <style>
+            h2{
+                font-size:1.2em;
+                padding-bottom:10px
+            }
+            ul{
+                list-style-type:none
+            }
+            li.example a{
+                font-size:1.6em;
+                margin-left:10px;
+                margin-top:10px;
+                color:#000;
+                text-decoration:none;
+                border-bottom:1px dotted #000
+            }
+            li.example{
+                margin-top:10px;
+                height:110px
+            }
+            img.thumb{
+                float:left;
+                margin-top:-5px
+            }
+            .excerp{
+                float:left;
+                margin-left:10px;
+                font-size:.9em;
+                color:rgba(0,0,0,.7);
+                width:640px;
+                overflow:hidden
+            }
+            .hot{
+                color:#ec1e1e
+            }
+            .example strong{
+                float:right;font-size:14px
+            }
+            img{
+                opacity:.8;
+                -webkit-transition:all .2s ease;
+                transition:all .2s ease;
+                margin-top:-10px
+            }
+            .example:hover img{
+                opacity:1
+            }
+            @media (max-width:500px){
+                li.example a{
+                    font-size:.7em
+                }
+                img.thumb{
+                    margin-top:10px
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="wrapper">
+            <h1>heatmap.js 范例</h1>
+            <ol class="breadcrumb-trail">
+                <li><a href="index.html" title="heatmap.js 动态网络热力图">heatmap.js</a></li>
+                <li>热力图范例</li>
+            </ol>
+            <h2 class="hot">特色范例</h2>
+            <ul>
+                <li class="example">
+                    <img src="assets/img/heatmap-animation.gif" width="100" height="100" class="thumb" alt="animate heatmaps"/>
+                    <a href="example-heatmap-animation.html">热力图动画 </a>
+                    <div class="excerp">
+                        随时间给你的热图添加动画。此示例显示如何创建热图动画。<strong>&nbsp;&nbsp;新增</strong>
+                        <strong>高级</strong>
+                    </div>
+                </li>
+            </ul>
+            <h2 class="hot">基本范例</h2>
+            <ul>
+                <li class="example">
+                    <img src="assets/img/example-minimal.jpg" width="100" height="100" class="thumb" alt="minimal heatmap example"/>
+                    <a href="example-minimal-config.html">最低配置热力图</a>
+                    <div class="excerp">
+                        Kickstart的示例，最低的热力图配置，让你快速启动热力图！ 
+                        <strong>基础</strong>
+                    </div>
+                </li>
+                <li class="example">
+                    <img src="assets/img/example-point.jpg" width="100" height="100" class="thumb" alt="point customization heatmap example"/>
+                    <a href="example-point-config.html">自定义点数据</a>
+                    <div class="excerp">
+                        演示了点数据半径配置的示例，以便你可以使用不同的辐射范围来可视化点。
+                        <strong>基础</strong>
+                    </div>
+                </li>
+                <li class="example">
+                    <img src="assets/img/example-custom.jpg" width="100" height="100" class="thumb" alt="customized heatmap example"/>
+                    <a href="example-full-customization.html">完全自定义热力图</a>
+                    <div class="excerp">
+                        想要用自己的颜色创建一个完全自定义的热图？这个例子是你要找的！
+                        <strong>基础</strong>
+                    </div>
+                </li>
+                <li class="example">
+                    <img src="assets/img/example-click.jpg" width="100" height="100" class="thumb" alt="click heatmap example"/>
+                    <a href="example-click-heatmap.html">鼠标点击热力图</a>
+                    <div class="excerp">
+                        利用heatmap.js的运行时数据操作API来显示动态鼠标点击热图的一个例子。
+                        <strong>基础</strong>
+                    </div>
+                </li>
+                <li class="example">
+                    <img src="assets/img/example-move.jpg" width="100" height="100" class="thumb" alt="mouse move heatmap example"/>
+                    <a href="example-mousemove-heatmap.html">鼠标移动热力图</a>
+                    <div class="excerp">
+                        和鼠标点击热力图相似，只不过数据来源是鼠标移动和点击事件。<br/>
+                        <strong>基础</strong>
+                    </div>
+                </li>
+                <li class="example">
+                    <img src="assets/img/example-legend-tooltip.jpg" width="100" height="100" class="thumb" alt="heatmap with legend and tooltip example"/>
+                    <a href="example-legend-tooltip.html">图例 &amp; 提示</a>
+                    <div class="excerp">
+                        演示如何使用当前鼠标位置的值添加图例和工具提示的示例。
+                        <strong>Jedi Master (jk)</strong>
+                    </div>
+                </li>
+            </ul>
+            <h2 class="hot">地图范例</h2>
+            <ul>
+                <li class="example">
+                    <img src="assets/img/example-gmaps.jpg" width="100" height="100" class="thumb" alt="googlemaps heatmap layer plugin"/>
+                    <a href="example-heatmap-googlemaps.html">谷歌地图热力图层</a>
+                    <div class="excerp">
+                        演示如何使用谷歌地图热力图插件的示例。
+                    </div>
+                </li>
+                <li class="example">
+                    <img src="assets/img/example-leaflet.jpg" width="100" height="100" class="thumb" alt="leaflet heatmap layer plugin"/>
+                    <a href="example-heatmap-leaflet.html">Leaflet 热力图层</a>
+                    <div class="excerp">
+                        演示如何使用 Leaflet 地图热力图插件的示例。
+                    </div>
+                </li>
+                <!-- <li class="example">
+                <img src="" width="100" height="100" class="thumb" />
+                <a href="#">Openlayers Heatmap Layer</a>
+                <div class="excerp">
+                to be added...
+                </div>
+                </li>
+                <li class="example">
+                <img src="" width="100" height="100" class="thumb" />
+                <a href="#">ESRI Heatmap Layer</a>
+                <div class="excerp">
+                to be added...
+                </div>
+                </li>-->
+            </ul>
+            <h2 class="hot">其他插件范例</h2>
+            <ul>
+                <li class="example">
+                    <img src="assets/img/example-angularjs-heatmap.jpg" width="100" height="100" class="thumb" alt="angularjs heatmap example"/>
+                    <a href="example-angular-heatmap.html" title="angularjs heat map">AngularJS 热力图指示范例</a>
+                    <div class="excerp">
+                        本示例演示了如何使用AngularJS的heatmap指令。
+                    </div>
+                </li>
+            </ul>
+        </div>
+       
+    </body>
+</html>
