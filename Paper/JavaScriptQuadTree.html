@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>网络空间GIS点模式研究方法</title>
+    <link href="./bootstrap.min.css" rel="stylesheet">
+    <link href="./style.css" rel="stylesheet">  
+    <style>
+        p{
+            text-indent: 2em;
+        }
+    </style>
+</head>
+<body class="gray-bg">
+    <div class="wrapper wrapper-content  animated fadeInRight article">
+        <div class="row">
+            <div class="col-lg-10 col-lg-offset-1">
+                <div class="ibox">
+                    <div class="ibox-content">
+                        
+                        <div class="text-center article-title">
+                            <h2 id="title" title="新闻标题" style="margin-bottom: 24px;">JavaScript 实现四叉树 <small>——转载于<a href="http://www.mikechambers.com/blog/2011/03/21/javascript-quadtree-implementation/">Mike Chambers</a></small></h2>
+                            <div class="pull-right" style="padding-right: 10%;">
+                                <button id="author" class="btn btn-info" type="label">Mike Chambers</button>
+                                <button id="time" class="btn btn-info" type="label">2011-03-21 星期一</button>
+                            </div>
+                        </div>
+                        <div style="padding-top: 45px;">
+                            <p>前段时间我试玩了<a href="http://www.easeljs.com/">EaselJS</a>的一些测试例子，其中要求我对屏幕上的所有对象进行碰撞检测。当屏幕数量比较少的时候，这些例子可以很好地运行。但是当我添加大量的屏幕对象后，整个世界都变慢了。我知道我需要优化一下这些代码，减少碰撞检测的次数。我以前用网格做过这个（甚至为它举办过一个比赛），并打算将AS3代码移植到JavaScript来。然而，拉尔夫·豪威特建议我使用四叉树来实现，因为这样做更有效。</p>
+
+                            <p>四叉树是一种数据结构，它将坐标空间分解成包含对象的区域或节点。如果一个节点中添加了过多的对象，这个节点就会分裂为4个子节点。这样做可以提供基于坐标和坐标尺寸的非常快速的对象查询。已经有几个通过JavaScript和ActionScript实现的四叉树程序（麦克·博赞兹克 编写了优秀的<a href="http://lab.polygonal.de/2007/09/09/quadtree-demonstration/">AS3实现程序</a>。），但是我决定完全掌握四叉树，所以决定自己从头开始实现它。在JavaScript中实现四叉树的结果就是这些例子就可以在2D坐标系(x,y)和区域或对象维度运行。我已经在MIT许可证（麻省理工学院）下发布了所有代码，你们可以在<a href="https://github.com/mikechambers/ExamplesByMesh/tree/master/JavaScript/QuadTree">我的GitHub库</a>中下载它。</p>
+
+                            <p>这里有一个四叉树的在线例​​子：</p>
+                            <div style="width:520px;margin:auto;"><iframe src="QuadTree/collision.html" width="520" height="600"></iframe></div>
+
+                            <p>此示例显示如何使用四叉树来减少碰撞检测次数。我构建了了几个简单的例子：</p>
+
+                            <div style="width:520px;margin:auto;"><iframe src="QuadTree/insert.html" width="520" height="600"></iframe></div>
+                            <br>
+                            <div style="width:520px;margin:auto;"><iframe src="QuadTree/insert_bounds.html" width="520" height="600"></iframe></div>
+                            <br>
+                            <div style="width:520px;margin:auto;"><iframe src="QuadTree/retrieve.html" width="520" height="600"></iframe></div>
+                            <br>
+                            <div style="width:520px;margin:auto;"><iframe src="QuadTree/retrieve_bounds.html" width="520" height="600"></iframe></div>
+                        </div>
+
+                        <p>基础代码很简单，以下是使用四叉树存储和检索点的示例代码：</p>
+                        <pre><code>
+var pointQuad = true;
+var bounds = {
+    x:0,
+    y:0,
+    width:canvas.width,
+    height:canvas.height
+}
+
+var quad = new QuadTree(bounds, pointQuad);
+
+//插入随机点
+quad.insert({x:12, y:25});
+
+var items = quad.retrieve({x:11, y:20});
+                        </code></pre>
+
+                        <p>这里有一个简单的示例代码，展示使用四叉树来存储和检索具有 深度/边界 的对象：</p>
+                        <pre><code>
+var bounds = {
+    x:0,
+    y:0,
+    width:canvas.width,
+    height:canvas.height
+}
+var quad = new QuadTree(bounds);
+
+//插入随机点
+quad.insert({
+    x:12, 
+    y:25,
+    height:10,
+    width:25
+});
+
+var items = quad.retrieve({x:11, y:20, height:10, width:20});
+                        </code></pre>
+
+                        <p>github上的库似乎相当稳固，但是如果你发现任何问题，或者有任何建议，请将项目分开，并将更改提交给我，或将其发布在评论中。在实现方面仍然有很多优化和改进的余地，例如预先分配节点，但是我要以后再实现了。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
