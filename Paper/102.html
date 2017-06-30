@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Staged Analysis:From Evocative to Comparative Visualizations of Urban Mobility</title>
+    <link href="./bootstrap.min.css" rel="stylesheet">
+    <link href="./style.css" rel="stylesheet">  
+    <style>
+        p{
+            text-indent: 2em;
+        }
+    </style>
+</head>
+<body class="gray-bg">
+    <div class="wrapper wrapper-content  animated fadeInRight article">
+        <div class="row">
+            <div class="col-lg-10 col-lg-offset-1">
+                <div class="ibox">
+                    <div class="ibox-content">
+                        
+                        <div class="text-center article-title">
+                            <h2 id="title" title="标题" style="margin-bottom: 24px;">Staged Analysis:From Evocative to Comparative Visualizations of Urban Mobility</h2>
+                            <div class="pull-right" style="padding-right: 10%;">
+                                <button id="author" class="btn btn-info" type="label">Till Nagel / Christopher Pietsch / Marian Dork</button>
+                                <button id="time" class="btn btn-info" type="label">Proceedings of the IEEE VIS 2016 Arts Program, VISAP’16: Metamorphoses, Baltimore, Maryland, October 23th-28th, 2016</button>
+                            </div>
+                        </div>
+                        <br><br>
+
+                        <h3>ABSTRACT</h3>
+
+                        <p>In this paper we examine the concept of staged analysis through a case study on visualizing urban mobility exhibited in a public gallery space. Recently, many cities introduced bike-sharing in order to promote cycling among locals and visitors. We explore how citizens can be guided from evocative impressions of bicycling flows to comparative analysis of three bike-sharing systems. The main aim for visualizations in exhibition contexts is to encourage a shift from temporary interest to deeper insight into a complex phenomenon. To pursue this ambition we introduce cf. city flows, a comparative visualization environment of urban bike mobility designed to help citizens casually analyze three bike-sharing systems in the context of a public exhibition space. Multiple large screens show the space of flows in bike-sharing for three selected world cities: Berlin, London, and New York. Bike journeys are represented in three geospatial visualizations designed to be progressively more analytical, from animated trails to small-multiple glyphs. In this paper, we describe our design concept and process, the exhibition setup, and discuss some of the insights visitors gained while interacting with the visualizations.</p>
+
+                        <p><strong>Keywords:</strong> Flow maps, comparative visualization, urban mobility, bike-sharing, geovisualization, storytelling, public displays.</p>
+
+                        <br><br>
+                        <h3>1 INTRODUCTION</h3>
+
+                        <p>New technologies are stimulating changes in our urban mobility. The digital transformation of our cities enables new services, ranging from car sharing and pooling, to multi-modal transportation and personalized travel routes. With the rise of these alternative transport options the way we move in our cities is being diversified resulting in changing transport patterns. Cycling is increasingly recognized as a critical component of our future urban mobility mix. Riding a bike is largely independent of other traffic, it remains unaffected by road congestion, and has health and environmental benefits. Paralleling the renaissance of bicycling, many cities around the world have installed bike-sharing systems in order to promote the use of bicycles among locals and visitors. The recent proliferation of bike-sharing systems poses an interesting opportunity for visualization research to investigate new ways to help citizens make sense of a complex urban phenomenon that is relevant to their everyday experience of the city.</p>
+
+                        <p>In this paper, we introduce cf. city flows, an interactive multidisplay exhibit visualizing bike-sharing mobility in three cities. By showing the flow of multiple cities side by side, exhibition visitors can compare their extent and dynamics. The visualizations are designed to support different levels of insight, from piquing visitors’ interest to encouraging analysis. We explore this shift from surface to in-depth observations as staged analysis, to refer to a progressive increase of analytical capability from one view to the next.</p>
+
+                        <p>In the remainder of the paper, we first discuss prior research, then develop the concept of staged analysis, and describe our design of cf. city flows. We finish with observations from a deployment during an exhibition and close with a discussion of open questions and promising directions.</p>
+
+                        <br><br>
+                        <h3>2 RELATED WORK</h3>
+
+                        <p>Our work relates the most to prior research on visualizing spatial movement patterns and targeting non-expert audiences in public settings such as exhibitions.</p>
+
+                        <p>Various techniques have been developed for the visual analysis of movement data <sup><sup>[2]</sup></sup>. These have been used to visualize urban mobility, ranging from traffic data <sup>[7]</sup> to urban movements based on mobile phone data <sup>[11]</sup>. Flow maps are an established visualization technique for depicting movement between multiple geographical locations, typically showing lines connecting the flow origins with the destinations, often with the flow magnitudes mapped to line thickness. Recently, various techniques were proposed to improve flow maps for large networks such as through edge bundling <sup>[15, 21]</sup>. Others developed new techniques to lessen occlusion problems, such as OD maps <sup>[26]</sup>, separating origins and destinations <sup>[5]</sup>, or by clustering trajectories <sup>[1]</sup>. In the field of bike-sharing, urban planners have investigated public bicycle systems to analyze spatial networks and communities <sup>[3]</sup>, or to study how weather affects its use <sup>[10]</sup>.</p> 
+
+                        <p>Besides targeting the ‘initiated’ such as urban scholars, planners, or activists, visualizations of urban data can help city inhabitants to become more aware of their immediate environment, and provide the opportunity to communicate around current issues <sup>[24]</sup> and personal behaviour changes <sup>[23]</sup>. In order to reach non-expert audiences, visualizations of urban mobility have already been displayed in exhibitions, ranging from animated visualizations of bikesharing <sup>[25]</sup> to interactive tabletops showing public transit <sup>[18]</sup>. However, visualizations in public settings tend to offer fairly reduced representations with limited analytic capability. Most systems provide interactive views only for a single city, and only static graphs for multiple cities. Current research is exploring how to support interactive comparisons across multiple locations. Spatial scale differences as well as data complexity pose technical as well as perceptual challenges. Existing work already allows the visualization of urban activities in multiple cities <sup>[4, 11]</sup>, but only in sequence and not in juxtaposition for comparative analysis. It is not possible to conduct detailed comparisons of flows for far apart areas. However, visualizing mobility patterns between multiple cities could enable citizens to put their own city into a larger perspective. In addition it is also the comparison between different locales within a city that is lacking in most public visualizations, even though it could help viewers to relate the data to their own everyday life.</p>
+
+                        <br><br>
+                        <h3>3 TOWARDS STAGED ANALYSIS</h3>
+
+                        <p>Traditionally aimed at experts, data visualizations are gaining currency in the wider public, especially with their expanding use in news and social media. However, when designing visualizations for a broad audience, it can be difficult to reach the right balance of aesthetic quality, data complexity, and analytic capability. Related to the aim of supporting short-term and long-term explorations <sup>[14]</sup>, the challenge for visualizations in exhibition spaces is to support a gradient from vague interest and curiosity to open-ended exploration, specific insights, and casual conversations. It is still likely that visitors encounter a given visualization technique for the first time. Being unfamiliar with the visual encodings and interaction techniques might make the represented phenomena considerably more opaque than expected.</p> 
+
+                        <p>The first necessary step is to actually gain the attention of visitors and then, if successful, gently guide them through a visualization exhibit. Ideally a visitor would reach instant rapport with the visualization and be continuously stimulated until their curiosity is satisfied and they have made an interesting observation. However, often visualization exhibits fall behind the technical status quo in order to not overwhelm visitors with varying backgrounds. The question is, how can we encourage citizens to engage with these relatively new representations and help them to make sense of complex datasets such as urban mobility patterns?</p> 
+
+                        <p>To explore the challenge of gradually moving from interest to insight we propose the term staged analysis. Invoking temporal and theatrical notions, we define ‘staged analysis’ as a carefully choreographed process of breaking up a complex whole into its component parts and purposefully preparing the manner of their appearance. In the context of visualization, the concept of staging typically refers to animated transitions broken up to be more easily observed <sup>[13]</sup>. We build on top of this notion of staging and extend it to a guided analysis process.</p> 
+
+                        <p>Staged analysis starts with a high-level perspective on the phenomenon and then gradually shifts into specific views supporting structured comparisons. At the beginning a visualization designed with staged analysis in mind should first provide the opportunity for an aesthetic experience, which forms the basis for the later stages that encourage an analytical engagement with the represented data. In short, our aim is to devise ways for piquing a visitor’s interest in a visualization of a complex phenomenon, growing their capacity to make sense of the visualized data, and encouraging them to engage in discussions about the topic with other people.</p>
+
+                        <br>
+                        <h4>3.1 Design goals</h4> 
+
+                        <p>To transfer the theoretical concept of staged analysis into practical manifestation of a case study, we propose three design goals for visualizations in exhibitions that operate at three levels: the aesthetic, functional, and social.</p> 
+
+                        <p><strong>Provide evocative aesthetics (EA).</strong> The overall experience of the visualization exhibit should be designed in such ways as to attract visitors and pique their curiosity. While it is certainly challenging to measure, it has been shown that aesthetically pleasing visualizations can increase a viewer’s interest and lead to lower abandonment rates <sup>[6]</sup>. The default views of the visualization should already be compelling in order to attract and engage visitors passing by <sup>[20]</sup>. To encourage people to explore the data for longer, the system should also provide fluid interactions including high responsiveness and smooth view transitions <sup>[9]</sup>.</p> 
+
+                        <p><strong>Support comparative analysis (CA).</strong> Visualizations designed for staged analysis should encourage visitors to compare multiple aspects of complex datasets, for example, in the case of urban mobility various spatial and temporal comparisons are feasible. Comparative views on urban mobility may help visitors to better understand their specific city in the context of others and their own mobility pattern across the day. Making mobility patterns visible to citizens, can be seen as an invitation to think globally and relationally, possibly even with regard to their own mobility. In this way, we hope people can start to place their own urban experience in relation to other cities and consider themselves as informed global citizens. Different comparisons should be connected in an order that aligns with increases in the analytic capacity of the viewer.</p> 
+
+                        <p><strong>Open a discursive space (DS).</strong> Besides the individual engagement with a visualization, public exhibitions offer the unique opportunity to have visitors interact with each other around the visualizations. Furthermore, people should be able to decide whether to interact with the system or to observe the visualizations. The setup of the exhibition should enable both individuals and groups of people to engage with the visualizations. The visualizations should support varying levels of insights to provide an inviting space for people with different backgrounds. Visual presentations and simple interaction mechanisms should be provided in such ways to be accessible to diverse groups of visitors. The social space around visualization exhibits should encourage casual reflection and discourse about the represented phenomenon and maybe even the visitors’ own role in urban mobility <sup>[19]</sup>.</p> 
+
+                        <p>To encourage staged analysis as a shift from cursory to profound experiences with data visualizations, the visualization, interface, and overall exhibit need to be designed towards above three goals operating at three distinct, yet interdependent levels: the aesthetic, functional, and social. The design goals stand in an ordered dependency with each other, in which evocative aesthetics (EA) forms the necessary basis for comparative analysis (CA), which in turn allows for a discursive space (DS) to open around the subject matter.</p>
+
+                        <br>
+                        <h4>3.2 Approach</h4>
+
+                        <p>Our goal is not to quantitatively measure the varying levels of interest and insight of visualization users, which would be considerably challenging to do in an exhibition space. Instead we seek to develop and refine the conceptual ideas and design goals of staged analysis through a case study of a comparative visualization environment of urban bike mobility designed to help citizens casually analyze bike-sharing systems in the context of a public exhibition space. Besides exploring the viability of staged analysis, the aim of the case study is to enable insights into complex urban spatiotemporal data, support understanding of a city’s mobility patterns, and encourage casual discourse among citizens. We believe that geo visualizations can empower citizens to make sense of the invisible layers in their environment and help people to better participate in the creation of the smart city. The city was always much more than its built form; by visualizing urban data we are now exploring novel methods to reveal these ephemeral and latent aspects of the city. We developed the project in an iterative design process, including various visualization experiments, discussions with public transit experts and potential users, and incorporating results therefrom into the system. Especially in a data visualization project, we deem an explorative design process useful in order to identify the relevant facets of the data and inherent stories first ourselves. More importantly, we wanted to investigate which techniques stimulate interest, and which are more analytical, and how to integrate them into a unified system. In this process we were oscillating between data analysis and rapid development of visual probes.</p>
+
+                        <br><br>
+                        <h3>4 CF. CITY FLOWS</h3>
+
+                        <p><a title="Besides for city flows, cf. also stands for confer (latin) resulting in a meaning of: compare the flows of different cities.">cf. city flows</a> is an interactive installation visualizing bike-sharing systems in three cities (see Fig. 1). Each system is visualized through a set of three interconnected views with gradually increasing analytic prowess, going from high-level views to small multiples. The installation was designed as an interactive triptych to be displayed in an exhibition setup suitable for a group of people, with one person controlling the visualization, and multiple persons able to watch and converse.</p> 
+
+                        <p>In the following, we introduce the underlying mobility data and describe the visual encodings, interaction techniques, and exhibition setup, while explaining the reasoning behind our design decisions along the way.</p>
+
+                        <br>
+                        <h4>4.1 Bike-sharing data</h4>
+
+                        <p> As transport authorities and companies have begun to understand the value of open data, more and more bike-sharing providers are starting to share some of their system’s data. This ranges from basics such as number and locations of stations, to available bikes and journeys between stations. While static data about the stations is abundant, only few providers share dynamic trip data, i.e., origindestination information. It is particularly the dynamic aspects of bike-sharing activity that promises to be appropriate for our case study, first because it is data that is likely to be of interest to city inhabitants and second, because the bike movements between the stations lend themselves well to conceive inviting visuals. We selected the station-based bike-sharing systems of <a href="https://www.tfl.gov.uk/info-for/open-data-users" target="_blank">London</a> and <a href="http://www.citibikenyc.com/system-data" target="_blank">New York City</a>, for which origin-destination data is available. We also added <a href="https://www.callabike-interaktiv.de" target="_blank">Berlin</a>, for which trip data has not been published so far. We scraped the data from a real-time map showing availability containing IDs for each bike. Thus, we could derive trip data on the assumption a trip started once a bike has been removed from the map and ended once it re-appeared later (potentially including nontrip bike movements, e.g., for re-balancing purposes). The chosen systems do not provide route information as the bike systems typically do not record GPS tracked movements (for cost and privacy reasons). We used the locations of the journey’s start and end stations to calculate optimal paths via the HERE routing <a href="https://developer.here.com/" target="_blank">service</a> (with the pedestrian option).</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
