@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>WebGL 热力图</title>
+</head>
+<style type="text/css">
+	html,body{
+		width: 100%;
+		height: 100%;
+		margin: 0;
+	}
+    #heatmap-example.small{
+        position: relative;
+        width: 100%;
+        height: 100%;
+        background-color: #333;
+    }
+
+    #heatmap-example div.error{
+        color: red;
+        font-weight: bold;
+        text-align: center;
+        padding-top: 240px;
+    }
+    #heatmap-example.big{
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0px;
+        left: 0px;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    #heatmap-example canvas{
+        position: absolute;
+        top: 0px;
+        left: 0px;
+    }
+
+    #heatmap-example.small canvas{
+        width: 100%;
+        height: 100%;
+    }
+    
+    #heatmap-example.big canvas{
+        width: 100%;
+        height: 100%;
+    }
+
+    #heatmap-example div.controls{
+    	color: white;
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        border-radius: 5px;
+        background-color: rgba(0, 0, 0, 0.8);
+        border: 1px solid #ccc;
+        padding: 5px;
+    }
+    #heatmap-example div.controls label{
+        display: inline-block;
+        width: 100px;
+    }
+    #heatmap-example div.controls span{
+        display: inline-block;
+        float: right;
+        margin-right: 5px;
+    }
+</style>
+<body>
+	<div id="heatmap-example" class="small">
+		<canvas></canvas>
+		<div class="controls">
+			<!--div>
+				<button id="toggle-overlay">Overlay</button>
+			</div-->
+			<div id="heatmap-count">
+				<label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;数量 <span></span></label><input style="width:80px" type="range" min="1" max="1000" value="180">
+			</div>
+			<div id="heatmap-size">
+				<label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;大小 <span></span></label><input style="width:80px" type="range" min="1" max="300" value="25">
+			</div>
+			<div id="heatmap-intensity">
+				<label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;强度 <span></span></label><input style="width:80px" type="range" min="1" max="100" value="5">
+			</div>
+			<div id="heatmap-spread">
+				<label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;散度 <span></span></label><input style="width:80px" type="range" min="0" max="300" value="100">
+			</div>
+			<div id="heatmap-decay">
+				<label>衰减速度 <span></span></label><input style="width:80px" type="range" min="0" max="100" value="18">
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript" src="js/jquery-1.10.1.min.js"></script>
+	<script type="text/javascript" src="js/webgl-heatmap.js"></script>
+
+	<script type="text/javascript">
+	    $(function(){
+	        var raf = (
+	            window.requestAnimationFrame ||
+	            window.mozRequestAnimationFrame ||
+	            window.webkitRequestAnimationFrame ||
+	            window.oRequestAnimationFrame
+	        );
+	        var canvas = $('#heatmap-example canvas');
+	        try{
+	            var heatmap = createWebGLHeatmap({canvas: canvas[0]});
+	        }
+	        catch(error){
+	            $('#heatmap-example').empty();
+	            $('<div class="error"></div>').text(error).appendTo('#heatmap-example');
+	            return;
+	        }
+
+/*	        var overlaid = false;
+	        $('#toggle-overlay').click(function(){
+	            if(overlaid){
+	                overlaid = false;
+	                $('#toggle-overlay').text('Overlay');
+	                $('#heatmap-example')
+	                    .removeClass('big')
+	                    .addClass('small')
+	            }
+	            else{
+	                overlaid = true;
+	                $('#toggle-overlay').text('Close Overlay');
+	                $('#heatmap-example')
+	                    .removeClass('small')
+	                    .addClass('big')
+	            }
+	        });*/
+	               
+	        var paintAtCoord = function(x, y){
+	            var i = 0;
+	            while(i < count){
+	                var xoff = Math.random()*2-1;
+	                var yoff = Math.random()*2-1;
+	                var l = xoff*xoff + yoff*yoff;
+	                if(l > 1){
+	                    continue;
+	                }
+	                var ls = Math.sqrt(l);
+	                xoff/=ls; 
+	                yoff/=ls;
+	                xoff*=1-l; 
+	                yoff*=1-l;
+	                i += 1;
+	                heatmap.addPoint(x+xoff*spread, y+yoff*spread, size, intensity/1000);
+                }
+	        };
+
+	        canvas.mousemove(function(event){
+	                var offset = canvas.offset();
+	                var x = event.pageX - offset.left;
+	                var y = event.pageY - offset.top;
+	                paintAtCoord(x, y);
+	            })
+	            .click(function(){
+	                heatmap.clear();
+	            })
+	            
+	        var onTouchMove = function(evt){
+	            evt.preventDefault();
+	            var touches = evt.changedTouches;
+	            var offset = canvas.offset();
+	            for(var i=0; i<touches.length; i++){
+	                var touch = touches[i];
+	                var x = touch.pageX - offset.left;
+	                var y = touch.pageY - offset.top;
+	                paintAtCoord(x, y);
+	            }
+	        };
+	        canvas[0].addEventListener("touchmove", onTouchMove, false);
+
+	        var setupSlider = function(name, onChange){
+	            var input = $(name).find('input');
+	            var span = $(name).find('span');
+	            input.change(function(){
+	                var value = parseInt(input.val(), 10);
+	                span.text(value);
+	                onChange(value);
+	            });
+	            var startValue = parseInt(input.val(), 10);
+	            span.text(startValue);
+	            return startValue;
+	        }
+
+	        var count = setupSlider('#heatmap-count', function(value){count = value;});
+	        var size = setupSlider('#heatmap-size', function(value){size = value;});
+	        var intensity = setupSlider('#heatmap-intensity', function(value){intensity = value;});
+	        var spread = setupSlider('#heatmap-spread', function(value){spread = value;});
+	        var decay = setupSlider('#heatmap-decay', function(value){decay = value;});
+
+	        var over = false;
+	        $('#heatmap-example').hover(function(){over=true;}, function(){over=false});
+
+	        var update = function(){
+	            if(over){
+	                heatmap.adjustSize(); // can be commented out for statically sized heatmaps, resize clears the map
+	                heatmap.update(); // adds the buffered points
+	                heatmap.multiply(1-decay/(100*100));
+	                heatmap.display(); // draws the heatmap to the canvas
+
+	                //heatmap.blur();
+	                //heatmap.clamp(0.0, 1.0); // depending on usecase you might want to clamp it
+	            }
+	            raf(update);
+	        }
+	        raf(update);
+	    });
+	</script>
+</body>
+</html>
