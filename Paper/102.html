@@ -21,7 +21,8 @@
                     <div class="ibox-content">
                         
                         <div class="text-center article-title">
-                            <h2 id="title" title="标题" style="margin-bottom: 24px;">Staged Analysis:From Evocative to Comparative Visualizations of Urban Mobility</h2>
+                            <h2 id="title" title="标题" style="margin-bottom: 24px;">Staged Analysis:From Evocative to Comparative Visualizations of Urban Mobility <br>
+                            <small>阶段分析：从形象再现到比较式城市流动可视化</small></h2>
                             <div class="pull-right" style="padding-right: 10%;">
                                 <button id="author" class="btn btn-info" type="label">Till Nagel / Christopher Pietsch / Marian Dork</button>
                                 <button id="time" class="btn btn-info" type="label">Proceedings of the IEEE VIS 2016 Arts Program, VISAP’16: Metamorphoses, Baltimore, Maryland, October 23th-28th, 2016</button>
@@ -29,9 +30,10 @@
                         </div>
                         <br><br>
 
-                        <h3>ABSTRACT</h3>
+                        <h3>ABSTRACT / 摘要</h3>
 
                         <p>In this paper we examine the concept of staged analysis through a case study on visualizing urban mobility exhibited in a public gallery space. Recently, many cities introduced bike-sharing in order to promote cycling among locals and visitors. We explore how citizens can be guided from evocative impressions of bicycling flows to comparative analysis of three bike-sharing systems. The main aim for visualizations in exhibition contexts is to encourage a shift from temporary interest to deeper insight into a complex phenomenon. To pursue this ambition we introduce cf. city flows, a comparative visualization environment of urban bike mobility designed to help citizens casually analyze three bike-sharing systems in the context of a public exhibition space. Multiple large screens show the space of flows in bike-sharing for three selected world cities: Berlin, London, and New York. Bike journeys are represented in three geospatial visualizations designed to be progressively more analytical, from animated trails to small-multiple glyphs. In this paper, we describe our design concept and process, the exhibition setup, and discuss some of the insights visitors gained while interacting with the visualizations.</p>
+                        <p>本文通过一个在公共图库空间可视化城市流动的案例研究了阶段分析的概念。最近，许多城市推出共享单车来鼓励当地人和游客骑自行车。我们探索如何引导市民从令人回味的骑自行车的印象到三个自行车共享系统的比较分析。在展览环境中可视化的主要目的是鼓励从临时兴趣转向深入挖掘复杂现象</p>
 
                         <p><strong>Keywords:</strong> Flow maps, comparative visualization, urban mobility, bike-sharing, geovisualization, storytelling, public displays.</p>
 
@@ -93,6 +95,8 @@
                         <h4>4.1 Bike-sharing data</h4>
 
                         <p> As transport authorities and companies have begun to understand the value of open data, more and more bike-sharing providers are starting to share some of their system’s data. This ranges from basics such as number and locations of stations, to available bikes and journeys between stations. While static data about the stations is abundant, only few providers share dynamic trip data, i.e., origindestination information. It is particularly the dynamic aspects of bike-sharing activity that promises to be appropriate for our case study, first because it is data that is likely to be of interest to city inhabitants and second, because the bike movements between the stations lend themselves well to conceive inviting visuals. We selected the station-based bike-sharing systems of <a href="https://www.tfl.gov.uk/info-for/open-data-users" target="_blank">London</a> and <a href="http://www.citibikenyc.com/system-data" target="_blank">New York City</a>, for which origin-destination data is available. We also added <a href="https://www.callabike-interaktiv.de" target="_blank">Berlin</a>, for which trip data has not been published so far. We scraped the data from a real-time map showing availability containing IDs for each bike. Thus, we could derive trip data on the assumption a trip started once a bike has been removed from the map and ended once it re-appeared later (potentially including nontrip bike movements, e.g., for re-balancing purposes). The chosen systems do not provide route information as the bike systems typically do not record GPS tracked movements (for cost and privacy reasons). We used the locations of the journey’s start and end stations to calculate optimal paths via the HERE routing <a href="https://developer.here.com/" target="_blank">service</a> (with the pedestrian option).</p>
+
+
                     </div>
                 </div>
             </div>
